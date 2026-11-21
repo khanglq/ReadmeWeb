@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "无标题",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "打开或创建一个文档以查看其大纲。"
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Markdown 指南",
     "lineCount": "行数：{{count}}",
     "tokenCount": "Tokens：{{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "轻量简洁的 Markdown 阅读器",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "打开文件",
     "newButton": "新建文件",
     "dropHint": "或将 .md 文件拖入此窗口任意位置",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "正在检查...",
     "updateIdle": "版本 {{version}}。检查是否有新版本。",
     "updateChecking": "正在检查 GitHub Releases...",
-    "updateCurrent": "Moji {{version}} 已是最新版本。",
-    "updateAvailable": "Moji {{version}} 可用。",
+    "updateCurrent": "ReadmeWeb {{version}} 已是最新版本。",
+    "updateAvailable": "ReadmeWeb {{version}} 可用。",
     "updateFailed": "无法检查更新，请重试。",
     "updateUnsupported": "此构建不支持检查更新。",
     "openReleases": "更新",
-    "whyNameTitle": "为什么叫 Moji？",
-    "whyNameBody": "Moji 简短、易记，让人联想到文字与书写。这个名字契合它的目标：流畅地打开、编辑、预览和导出 Markdown，远离干扰。"
+    "whyNameTitle": "为什么叫 ReadmeWeb？",
+    "whyNameBody": "ReadmeWeb 简短、易记，让人联想到文字与书写。这个名字契合它的目标：流畅地打开、编辑、预览和导出 Markdown，远离干扰。"
   },
   "update": {
     "availableTitle": "有新版本可用",
-    "availableBody": "Moji {{version}} 已可在 GitHub Releases 下载。",
+    "availableBody": "ReadmeWeb {{version}} 已可在 GitHub Releases 下载。",
     "errorTitle": "更新失败",
     "errorBody": "{{error}}",
     "unknownError": "未知更新错误",
@@ -252,7 +252,11 @@
     "autoSaveCleanupFailed": "无法删除恢复草稿：{{error}}",
     "draftRestoreFailed": "无法恢复草稿：{{error}}",
     "openFailed": "无法打开文件：{{error}}",
-    "errorReason": { "notFound": "找不到文件。", "permissionDenied": "权限被拒绝。", "busy": "文件正在使用中。" },
+    "errorReason": {
+      "notFound": "找不到文件。",
+      "permissionDenied": "权限被拒绝。",
+      "busy": "文件正在使用中。"
+    },
     "noDocument": "请先打开一个文档。",
     "readOnlyGuide": "内置 Markdown 指南为只读内容，无法保存。",
     "replaceNeedsSearch": "请先输入搜索词。",

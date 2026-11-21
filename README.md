@@ -2,7 +2,7 @@
 
 A clean, modern, and lightweight Markdown viewer and editor on the web.
 
-Built with **React 18**, **TypeScript**, and **Vite**, based on the refined UI/UX design of **Moji**.
+Built with **React 18**, **TypeScript**, and **Vite**.
 
 ## Features
 

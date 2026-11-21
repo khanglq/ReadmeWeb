@@ -1,6 +1,6 @@
 # Volledige Markdown-handleiding
 
-Praktische naslag voor het schrijven, controleren en exporteren van Markdown-documenten in **Moji**. Elke sectie toont de syntaxis en het resultaat.
+Praktische naslag voor het schrijven, controleren en exporteren van Markdown-documenten in **ReadmeWeb**. Elke sectie toont de syntaxis en het resultaat.
 
 ## Inhoudsopgave
 
@@ -22,7 +22,7 @@ Praktische naslag voor het schrijven, controleren en exporteren van Markdown-doc
 
 ## Koppen
 
-Gebruik één tot zes `#`-tekens. Het zijpaneel van Moji gebruikt deze koppen voor navigatie; houd de niveaus daarom in logische volgorde.
+Gebruik één tot zes `#`-tekens. Het zijpaneel van ReadmeWeb gebruikt deze koppen voor navigatie; houd de niveaus daarom in logische volgorde.
 
 ~~~markdown
 # Kop van niveau 1
@@ -77,7 +77,7 @@ Gebruik `-`, `*` of `+` voor opsommingen en getallen met een punt voor genummerd
 ## Koppelingen en afbeeldingen
 
 ~~~markdown
-[Moji-website](https://github.com/alexishida/Moji)
+[ReadmeWeb-website](https://github.com/khanglq/ReadmeWeb)
 <https://example.com>
 [Verwijzingskoppeling][ref]
 
@@ -127,7 +127,7 @@ Dubbele punten in de scheidingsregel bepalen de uitlijning van kolommen.
 
 ## Wiskundige formules
 
-Moji gebruikt KaTeX. Zet een inlineformule tussen `$...$` en een gecentreerde formule tussen `$$...$$`.
+ReadmeWeb gebruikt KaTeX. Zet een inlineformule tussen `$...$` en een gecentreerde formule tussen `$$...$$`.
 
 ~~~markdown
 De energie wordt gegeven door $E = mc^2$.
@@ -149,7 +149,7 @@ Drie tekens `-`, `*` of `_` op een aparte regel maken een scheidingslijn.
 
 ## HTML en escape-tekens
 
-Moji accepteert veilige HTML en verwijdert gevaarlijke tags of attributen vóór weergave en export.
+ReadmeWeb accepteert veilige HTML en verwijdert gevaarlijke tags of attributen vóór weergave en export.
 
 ~~~html
 <details>
@@ -162,7 +162,7 @@ Plaats `\` voor een Markdown-teken om het letterlijk weer te geven: `\*niet curs
 
 ## Uitgebreide functies
 
-Moji ondersteunt ook subscript, superscript, markering, invoeging, emoji, voetnoten, definitielijsten en afkortingen.
+ReadmeWeb ondersteunt ook subscript, superscript, markering, invoeging, emoji, voetnoten, definitielijsten en afkortingen.
 
 ~~~markdown
 H~2~O en x^2^
@@ -180,7 +180,7 @@ Markdown
 
 ## Mermaid-diagrammen
 
-Moji toont Mermaid-blokken in het voorbeeld. Klik op een diagram om het te vergroten, te verschuiven of als PNG te exporteren.
+ReadmeWeb toont Mermaid-blokken in het voorbeeld. Klik op een diagram om het te vergroten, te verschuiven of als PNG te exporteren.
 
 ~~~markdown
 ```mermaid
@@ -206,4 +206,4 @@ flowchart LR
 
 ---
 
-> Handleiding gemaakt voor **Moji**, Markdown-lezer en -editor. In de bewerkingsmodus blijft de broncode van deze handleiding alleen-lezen.
+> Handleiding gemaakt voor **ReadmeWeb**, Markdown-lezer en -editor. In de bewerkingsmodus blijft de broncode van deze handleiding alleen-lezen.

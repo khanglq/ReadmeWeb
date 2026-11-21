@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "Sin título",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "Abre o crea un documento para ver su esquema."
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Guía de Markdown",
     "lineCount": "Líneas: {{count}}",
     "tokenCount": "Tokens: {{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "Un lector de Markdown ligero y sencillo",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "Abrir archivo",
     "newButton": "Nuevo archivo",
     "dropHint": "o suelta un archivo .md en cualquier parte de esta ventana",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "Buscando...",
     "updateIdle": "Versión {{version}}. Busca una versión más reciente.",
     "updateChecking": "Consultando GitHub Releases...",
-    "updateCurrent": "Moji {{version}} está actualizado.",
-    "updateAvailable": "Moji {{version}} está disponible.",
+    "updateCurrent": "ReadmeWeb {{version}} está actualizado.",
+    "updateAvailable": "ReadmeWeb {{version}} está disponible.",
     "updateFailed": "No se pudieron buscar actualizaciones. Inténtalo de nuevo.",
     "updateUnsupported": "La comprobación de actualizaciones no está disponible en esta compilación.",
     "openReleases": "Actualizar",
-    "whyNameTitle": "¿Por qué Moji?",
-    "whyNameBody": "Moji es corto, fácil de recordar y evoca caracteres y escritura. El nombre encaja con su propósito: abrir, editar, previsualizar y exportar Markdown con fluidez, sin distracciones."
+    "whyNameTitle": "¿Por qué ReadmeWeb?",
+    "whyNameBody": "ReadmeWeb es corto, fácil de recordar y evoca caracteres y escritura. El nombre encaja con su propósito: abrir, editar, previsualizar y exportar Markdown con fluidez, sin distracciones."
   },
   "update": {
     "availableTitle": "Nueva versión disponible",
-    "availableBody": "Moji {{version}} ya se puede descargar en GitHub Releases.",
+    "availableBody": "ReadmeWeb {{version}} ya se puede descargar en GitHub Releases.",
     "errorTitle": "Error de actualización",
     "errorBody": "{{error}}",
     "unknownError": "Error de actualización desconocido",
@@ -252,7 +252,11 @@
     "autoSaveCleanupFailed": "No se pudo eliminar el borrador de recuperación: {{error}}",
     "draftRestoreFailed": "No se pudieron restaurar los borradores de recuperación: {{error}}",
     "openFailed": "No se pudo abrir el archivo: {{error}}",
-    "errorReason": { "notFound": "Archivo no encontrado.", "permissionDenied": "Permiso denegado.", "busy": "Archivo en uso." },
+    "errorReason": {
+      "notFound": "Archivo no encontrado.",
+      "permissionDenied": "Permiso denegado.",
+      "busy": "Archivo en uso."
+    },
     "noDocument": "Abre un documento primero.",
     "readOnlyGuide": "La guía de Markdown incluida es de solo lectura y no se puede guardar.",
     "replaceNeedsSearch": "Introduce primero un término de búsqueda.",

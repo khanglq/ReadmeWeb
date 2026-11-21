@@ -24,7 +24,7 @@ export function Welcome({ onOpen, onOpenServerDocuments, onNew, recentFiles, onO
   return (
     <div className="pane">
       <div className="welcome">
-        <img className="welcome__logo" src={logoMark} alt="Moji" draggable={false} />
+        <img className="welcome__logo" src={logoMark} alt="ReadmeWeb" draggable={false} />
         <h1 className="welcome__title">{t('welcome.title')}</h1>
         <p className="welcome__tagline">{t('welcome.tagline')}</p>
         <div className="welcome__actions">

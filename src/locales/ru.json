@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "Без названия",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "Откройте или создайте документ, чтобы увидеть его структуру."
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Руководство по Markdown",
     "lineCount": "Строк: {{count}}",
     "tokenCount": "Токенов: {{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "Лёгкая и простая программа для чтения Markdown",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "Открыть файл",
     "newButton": "Новый файл",
     "dropHint": "или перетащите файл .md в это окно",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "Проверка...",
     "updateIdle": "Версия {{version}}. Проверьте наличие новой версии.",
     "updateChecking": "Проверка GitHub Releases...",
-    "updateCurrent": "Установлена актуальная версия Moji {{version}}.",
-    "updateAvailable": "Доступна версия Moji {{version}}.",
+    "updateCurrent": "Установлена актуальная версия ReadmeWeb {{version}}.",
+    "updateAvailable": "Доступна версия ReadmeWeb {{version}}.",
     "updateFailed": "Не удалось проверить обновления. Повторите попытку.",
     "updateUnsupported": "Проверка обновлений недоступна в этой сборке.",
     "openReleases": "Обновить",
-    "whyNameTitle": "Почему Moji?",
-    "whyNameBody": "Moji — короткое, легко запоминающееся имя, которое ассоциируется с символами и письмом. Оно отражает задачу приложения: плавно открывать, редактировать, просматривать и экспортировать Markdown — без отвлечений."
+    "whyNameTitle": "Почему ReadmeWeb?",
+    "whyNameBody": "ReadmeWeb — короткое, легко запоминающееся имя, которое ассоциируется с символами и письмом. Оно отражает задачу приложения: плавно открывать, редактировать, просматривать и экспортировать Markdown — без отвлечений."
   },
   "update": {
     "availableTitle": "Доступна новая версия",
-    "availableBody": "Moji {{version}} можно скачать в GitHub Releases.",
+    "availableBody": "ReadmeWeb {{version}} можно скачать в GitHub Releases.",
     "errorTitle": "Ошибка обновления",
     "errorBody": "{{error}}",
     "unknownError": "Неизвестная ошибка обновления",
@@ -252,7 +252,11 @@
     "autoSaveCleanupFailed": "Не удалось удалить черновик восстановления: {{error}}",
     "draftRestoreFailed": "Не удалось восстановить черновики: {{error}}",
     "openFailed": "Не удалось открыть файл: {{error}}",
-    "errorReason": { "notFound": "Файл не найден.", "permissionDenied": "Доступ запрещён.", "busy": "Файл используется." },
+    "errorReason": {
+      "notFound": "Файл не найден.",
+      "permissionDenied": "Доступ запрещён.",
+      "busy": "Файл используется."
+    },
     "noDocument": "Сначала откройте документ.",
     "readOnlyGuide": "Встроенное руководство Markdown доступно только для чтения и не может быть сохранено.",
     "replaceNeedsSearch": "Сначала введите условие поиска.",

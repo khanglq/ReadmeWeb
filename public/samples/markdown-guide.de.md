@@ -1,6 +1,6 @@
 # Vollständige Markdown-Anleitung
 
-Praktisches Nachschlagewerk zum Schreiben, Prüfen und Exportieren von Markdown-Dokumenten in **Moji**. Jeder Abschnitt zeigt Syntax und Ergebnis.
+Praktisches Nachschlagewerk zum Schreiben, Prüfen und Exportieren von Markdown-Dokumenten in **ReadmeWeb**. Jeder Abschnitt zeigt Syntax und Ergebnis.
 
 ## Inhaltsverzeichnis
 
@@ -22,7 +22,7 @@ Praktisches Nachschlagewerk zum Schreiben, Prüfen und Exportieren von Markdown-
 
 ## Überschriften
 
-Verwenden Sie ein bis sechs `#`-Zeichen. Die Seitenleiste von Moji nutzt diese Überschriften zur Navigation. Halten Sie deshalb eine sinnvolle Hierarchie ein.
+Verwenden Sie ein bis sechs `#`-Zeichen. Die Seitenleiste von ReadmeWeb nutzt diese Überschriften zur Navigation. Halten Sie deshalb eine sinnvolle Hierarchie ein.
 
 ~~~markdown
 # Überschrift der Ebene 1
@@ -77,7 +77,7 @@ Verwenden Sie `-`, `*` oder `+` für Aufzählungen und Zahlen mit Punkt für num
 ## Links und Bilder
 
 ~~~markdown
-[Moji-Projektseite](https://github.com/alexishida/Moji)
+[ReadmeWeb-Projektseite](https://github.com/khanglq/ReadmeWeb)
 <https://example.com>
 [Referenzlink][ref]
 
@@ -127,7 +127,7 @@ Doppelpunkte in der Trennzeile bestimmen die Ausrichtung der Spalten.
 
 ## Mathematische Formeln
 
-Moji verwendet KaTeX. Setzen Sie eine Formel in einer Zeile zwischen `$...$` und eine zentrierte Formel zwischen `$$...$$`.
+ReadmeWeb verwendet KaTeX. Setzen Sie eine Formel in einer Zeile zwischen `$...$` und eine zentrierte Formel zwischen `$$...$$`.
 
 ~~~markdown
 Die Energie ist durch $E = mc^2$ gegeben.
@@ -149,7 +149,7 @@ Drei Zeichen `-`, `*` oder `_` in einer eigenen Zeile erzeugen eine Trennlinie.
 
 ## HTML und Escape-Zeichen
 
-Moji akzeptiert sicheres HTML und entfernt gefährliche Tags oder Attribute vor Vorschau und Export.
+ReadmeWeb akzeptiert sicheres HTML und entfernt gefährliche Tags oder Attribute vor Vorschau und Export.
 
 ~~~html
 <details>
@@ -162,7 +162,7 @@ Setzen Sie `\` vor ein Markdown-Zeichen, um es wörtlich darzustellen: `\*nicht 
 
 ## Erweiterte Funktionen
 
-Moji unterstützt außerdem Tiefstellung, Hochstellung, Hervorhebung, Einfügung, Emojis, Fußnoten, Definitionslisten und Abkürzungen.
+ReadmeWeb unterstützt außerdem Tiefstellung, Hochstellung, Hervorhebung, Einfügung, Emojis, Fußnoten, Definitionslisten und Abkürzungen.
 
 ~~~markdown
 H~2~O und x^2^
@@ -180,7 +180,7 @@ Markdown
 
 ## Mermaid-Diagramme
 
-Moji stellt Mermaid-Blöcke in der Vorschau dar. Klicken Sie auf ein Diagramm, um es zu vergrößern, zu verschieben oder als PNG zu exportieren.
+ReadmeWeb stellt Mermaid-Blöcke in der Vorschau dar. Klicken Sie auf ein Diagramm, um es zu vergrößern, zu verschieben oder als PNG zu exportieren.
 
 ~~~markdown
 ```mermaid
@@ -206,4 +206,4 @@ flowchart LR
 
 ---
 
-> Anleitung für **Moji**, Markdown-Reader und -Editor. Im Bearbeitungsmodus bleibt der Quelltext dieser Anleitung schreibgeschützt.
+> Anleitung für **ReadmeWeb**, Markdown-Reader und -Editor. Im Bearbeitungsmodus bleibt der Quelltext dieser Anleitung schreibgeschützt.

@@ -3,7 +3,7 @@ import type { UpdateState } from '../types/app'
 import { IconRefresh, IconX } from './icons'
 import logoMark from '../assets/logo-mark-light.png'
 
-const RELEASES_URL = 'https://github.com/alexishida/Moji/releases'
+const RELEASES_URL = 'https://github.com/khanglq/ReadmeWeb/releases'
 
 interface AboutDialogProps {
   version: string
@@ -46,7 +46,7 @@ export function AboutDialog({ version, updateState, onClose, onCheckForUpdates }
           </div>
           <div className="about-dialog__hero-content">
             <p className="about-dialog__eyebrow">{t('aboutDialog.application')}</p>
-            <h3 className="about-dialog__name">Moji</h3>
+            <h3 className="about-dialog__name">ReadmeWeb</h3>
             <span className="about-dialog__badge">{t('aboutDialog.version', { version })}</span>
           </div>
         </section>
@@ -71,11 +71,11 @@ export function AboutDialog({ version, updateState, onClose, onCheckForUpdates }
               <span className="about-dialog__label">{t('aboutDialog.repositoryLabel')}</span>
               <a
                 className="about-dialog__link"
-                href="https://github.com/alexishida/moji"
+                href="https://github.com/khanglq/ReadmeWeb"
                 target="_blank"
                 rel="noreferrer"
               >
-                https://github.com/alexishida/moji
+                https://github.com/khanglq/ReadmeWeb
               </a>
             </div>
           </div>

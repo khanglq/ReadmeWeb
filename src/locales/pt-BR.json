@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "Sem título",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "Abra ou crie um documento para ver o sumário."
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Guia de Markdown",
     "lineCount": "Linhas: {{count}}",
     "tokenCount": "Tokens: {{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "Um leitor de Markdown leve e simples",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "Abrir arquivo",
     "newButton": "Novo Arquivo",
     "dropHint": "ou arraste um arquivo .md para esta janela",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "Procurando...",
     "updateIdle": "Versão {{version}}. Procure uma versão mais recente.",
     "updateChecking": "Consultando GitHub Releases...",
-    "updateCurrent": "Moji {{version}} está atualizado.",
-    "updateAvailable": "Moji {{version}} está disponível.",
+    "updateCurrent": "ReadmeWeb {{version}} está atualizado.",
+    "updateAvailable": "ReadmeWeb {{version}} está disponível.",
     "updateFailed": "Não foi possível procurar atualizações. Tente novamente.",
     "updateUnsupported": "A verificação de atualizações não está disponível nesta versão do pacote.",
     "openReleases": "Atualizar",
-    "whyNameTitle": "Por que Moji?",
-    "whyNameBody": "Moji é curto, fácil de lembrar e remete a caracteres e escrita. O nome combina com sua proposta: abrir, editar, visualizar e exportar Markdown com fluidez — sem distrações."
+    "whyNameTitle": "Por que ReadmeWeb?",
+    "whyNameBody": "ReadmeWeb é curto, fácil de lembrar e remete a caracteres e escrita. O nome combina com sua proposta: abrir, editar, visualizar e exportar Markdown com fluidez — sem distrações."
   },
   "update": {
     "availableTitle": "Nova versão disponível",
-    "availableBody": "Moji {{version}} já pode ser baixado no GitHub Releases.",
+    "availableBody": "ReadmeWeb {{version}} já pode ser baixado no GitHub Releases.",
     "errorTitle": "Falha na atualização",
     "errorBody": "{{error}}",
     "unknownError": "Erro desconhecido na atualização",
@@ -252,7 +252,11 @@
     "autoSaveCleanupFailed": "Falha ao remover rascunho de recuperação: {{error}}",
     "draftRestoreFailed": "Falha ao restaurar rascunhos de recuperação: {{error}}",
     "openFailed": "Não foi possível abrir o arquivo: {{error}}",
-    "errorReason": { "notFound": "Arquivo não encontrado.", "permissionDenied": "Permissão negada.", "busy": "Arquivo em uso." },
+    "errorReason": {
+      "notFound": "Arquivo não encontrado.",
+      "permissionDenied": "Permissão negada.",
+      "busy": "Arquivo em uso."
+    },
     "noDocument": "Abra um documento primeiro.",
     "readOnlyGuide": "O guia Markdown incluído é somente leitura e não pode ser salvo.",
     "replaceNeedsSearch": "Digite um termo para buscar.",

@@ -1,6 +1,6 @@
 # Guide complet de Markdown
 
-Référence pratique pour rédiger, relire et exporter des documents Markdown dans **Moji**. Chaque section présente la syntaxe et son résultat.
+Référence pratique pour rédiger, relire et exporter des documents Markdown dans **ReadmeWeb**. Chaque section présente la syntaxe et son résultat.
 
 ## Table des matières
 
@@ -22,7 +22,7 @@ Référence pratique pour rédiger, relire et exporter des documents Markdown da
 
 ## Titres
 
-Utilisez de un à six caractères `#`. Le plan latéral de Moji utilise ces titres pour la navigation ; conservez donc une hiérarchie cohérente.
+Utilisez de un à six caractères `#`. Le plan latéral de ReadmeWeb utilise ces titres pour la navigation ; conservez donc une hiérarchie cohérente.
 
 ~~~markdown
 # Titre de niveau 1
@@ -77,7 +77,7 @@ Utilisez `-`, `*` ou `+` pour une liste à puces et des nombres suivis d’un po
 ## Liens et images
 
 ~~~markdown
-[Site de Moji](https://github.com/alexishida/Moji)
+[Site de ReadmeWeb](https://github.com/khanglq/ReadmeWeb)
 <https://example.com>
 [Lien de référence][ref]
 
@@ -127,7 +127,7 @@ Les deux-points de la ligne de séparation définissent l’alignement des colon
 
 ## Formules mathématiques
 
-Moji utilise KaTeX. Placez une formule en ligne entre `$...$` et une formule centrée entre `$$...$$`.
+ReadmeWeb utilise KaTeX. Placez une formule en ligne entre `$...$` et une formule centrée entre `$$...$$`.
 
 ~~~markdown
 L’énergie est donnée par $E = mc^2$.
@@ -149,7 +149,7 @@ Trois caractères `-`, `*` ou `_` sur une ligne distincte créent une séparatio
 
 ## HTML et caractères d’interprétation
 
-Moji accepte le HTML sûr et supprime les balises ou attributs dangereux avant l’aperçu et l’exportation.
+ReadmeWeb accepte le HTML sûr et supprime les balises ou attributs dangereux avant l’aperçu et l’exportation.
 
 ~~~html
 <details>
@@ -162,7 +162,7 @@ Ajoutez `\` devant un caractère Markdown pour l’afficher littéralement : `\*
 
 ## Fonctions étendues
 
-Moji prend également en charge les indices, exposants, surlignages, insertions, émojis, notes de bas de page, listes de définitions et abréviations.
+ReadmeWeb prend également en charge les indices, exposants, surlignages, insertions, émojis, notes de bas de page, listes de définitions et abréviations.
 
 ~~~markdown
 H~2~O et x^2^
@@ -180,7 +180,7 @@ Markdown
 
 ## Diagrammes Mermaid
 
-Moji rend les blocs Mermaid dans l’aperçu. Cliquez sur un diagramme pour l’agrandir, le déplacer ou l’exporter en PNG.
+ReadmeWeb rend les blocs Mermaid dans l’aperçu. Cliquez sur un diagramme pour l’agrandir, le déplacer ou l’exporter en PNG.
 
 ~~~markdown
 ```mermaid
@@ -206,4 +206,4 @@ flowchart LR
 
 ---
 
-> Guide créé pour **Moji**, lecteur et éditeur Markdown. En mode d’édition, le code source de ce guide reste en lecture seule.
+> Guide créé pour **ReadmeWeb**, lecteur et éditeur Markdown. En mode d’édition, le code source de ce guide reste en lecture seule.

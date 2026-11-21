@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "Chưa có tiêu đề",
     "modifiedMarker": "•"
   },
@@ -60,7 +60,7 @@
     "noDocument": "Mở hoặc tạo tài liệu để xem mục lục."
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Hướng dẫn Markdown",
     "lineCount": "Dòng: {{count}}",
     "tokenCount": "Token: {{count}}",
@@ -104,7 +104,7 @@
   },
   "welcome": {
     "tagline": "Trình đọc Markdown gọn nhẹ, tinh tế",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "Mở tệp",
     "serverButton": "Tài liệu máy chủ",
     "newButton": "Tệp mới",
@@ -204,17 +204,17 @@
     "checkingForUpdates": "Đang kiểm tra...",
     "updateIdle": "Phiên bản {{version}}. Kiểm tra bản phát hành mới hơn.",
     "updateChecking": "Đang kiểm tra các bản phát hành trên GitHub...",
-    "updateCurrent": "Moji {{version}} đã là bản mới nhất.",
-    "updateAvailable": "Đã có phiên bản Moji {{version}} mới.",
+    "updateCurrent": "ReadmeWeb {{version}} đã là bản mới nhất.",
+    "updateAvailable": "Đã có phiên bản ReadmeWeb {{version}} mới.",
     "updateFailed": "Không thể kiểm tra cập nhật. Vui lòng thử lại.",
     "updateUnsupported": "Tính năng kiểm tra cập nhật không khả dụng trong bản build này.",
     "openReleases": "Cập nhật",
-    "whyNameTitle": "Tại sao lại là Moji?",
-    "whyNameBody": "Moji ngắn gọn, dễ nhớ và gợi liên tưởng đến ký tự và chữ viết. Cái tên hoàn toàn phù hợp với mục đích: mở, chỉnh sửa, xem trước và xuất Markdown một cách mượt mà — không phiền nhiễu."
+    "whyNameTitle": "Tại sao lại là ReadmeWeb?",
+    "whyNameBody": "ReadmeWeb ngắn gọn, hiện đại và phản ánh chính xác mục tiêu: xem, chỉnh sửa và xuất tài liệu Markdown trực tiếp trên nền web một cách mượt mà — không phiền nhiễu."
   },
   "update": {
     "availableTitle": "Đã có phiên bản mới",
-    "availableBody": "Moji {{version}} đã sẵn sàng để tải xuống từ GitHub Releases.",
+    "availableBody": "ReadmeWeb {{version}} đã sẵn sàng để tải xuống từ GitHub Releases.",
     "errorTitle": "Cập nhật thất bại",
     "errorBody": "{{error}}",
     "unknownError": "Lỗi cập nhật không xác định",

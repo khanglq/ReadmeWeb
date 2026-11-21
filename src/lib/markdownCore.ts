@@ -198,7 +198,7 @@ function fileUrlToPath(fileUrl: string): string {
 }
 
 function localAssetUrl(fileUrl: string): string {
-  return `moji-asset://local/${encodeURIComponent(fileUrlToPath(fileUrl))}`
+  return `readmeweb-asset://local/${encodeURIComponent(fileUrlToPath(fileUrl))}`
 }
 
 /** `C:\...` or `C:/...` — an absolute Windows path, not a URL with scheme `c:`. */

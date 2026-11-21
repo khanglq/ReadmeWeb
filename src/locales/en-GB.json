@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "Untitled",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "Open or create a document to see its outline."
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Markdown Guide",
     "lineCount": "Lines: {{count}}",
     "tokenCount": "Tokens: {{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "A lightweight, simple Markdown reader",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "Open File",
     "newButton": "New File",
     "dropHint": "or drop a .md file anywhere in this window",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "Checking...",
     "updateIdle": "Version {{version}}. Check for a newer release.",
     "updateChecking": "Checking GitHub Releases...",
-    "updateCurrent": "Moji {{version}} is up to date.",
-    "updateAvailable": "Moji {{version}} is available.",
+    "updateCurrent": "ReadmeWeb {{version}} is up to date.",
+    "updateAvailable": "ReadmeWeb {{version}} is available.",
     "updateFailed": "Could not check for updates. Try again.",
     "updateUnsupported": "Update checks are unavailable in this build.",
     "openReleases": "Update",
-    "whyNameTitle": "Why Moji?",
-    "whyNameBody": "Moji is short, easy to remember, and evokes characters and writing. The name fits its purpose: opening, editing, previewing, and exporting Markdown smoothly—without distractions."
+    "whyNameTitle": "Why ReadmeWeb?",
+    "whyNameBody": "ReadmeWeb is a modern, distraction-free web Markdown viewer and editor designed to open, edit, preview, and export Markdown documents smoothly right in your browser."
   },
   "update": {
     "availableTitle": "New version available",
-    "availableBody": "Moji {{version}} is ready to download on GitHub Releases.",
+    "availableBody": "ReadmeWeb {{version}} is ready to download on GitHub Releases.",
     "errorTitle": "Update failed",
     "errorBody": "{{error}}",
     "unknownError": "Unknown update error",
@@ -252,7 +252,11 @@
     "autoSaveCleanupFailed": "Could not remove recovery draft: {{error}}",
     "draftRestoreFailed": "Could not restore recovery drafts: {{error}}",
     "openFailed": "Could not open file: {{error}}",
-    "errorReason": { "notFound": "File not found.", "permissionDenied": "Permission denied.", "busy": "File is in use." },
+    "errorReason": {
+      "notFound": "File not found.",
+      "permissionDenied": "Permission denied.",
+      "busy": "File is in use."
+    },
     "noDocument": "Open a document first.",
     "readOnlyGuide": "The bundled Markdown guide is read-only and cannot be saved.",
     "replaceNeedsSearch": "Enter a search term first.",

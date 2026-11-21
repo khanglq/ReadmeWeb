@@ -1,6 +1,6 @@
 # Guida completa a Markdown
 
-Riferimento pratico per scrivere, rivedere ed esportare documenti Markdown in **Moji**. Ogni sezione mostra la sintassi e il relativo risultato.
+Riferimento pratico per scrivere, rivedere ed esportare documenti Markdown in **ReadmeWeb**. Ogni sezione mostra la sintassi e il relativo risultato.
 
 ## Indice
 
@@ -22,7 +22,7 @@ Riferimento pratico per scrivere, rivedere ed esportare documenti Markdown in **
 
 ## Titoli
 
-Usa da uno a sei caratteri `#`. La struttura laterale di Moji usa questi titoli per la navigazione, quindi mantieni una gerarchia coerente.
+Usa da uno a sei caratteri `#`. La struttura laterale di ReadmeWeb usa questi titoli per la navigazione, quindi mantieni una gerarchia coerente.
 
 ~~~markdown
 # Titolo di livello 1
@@ -77,7 +77,7 @@ Usa `-`, `*` o `+` per gli elenchi puntati e numeri seguiti da un punto per quel
 ## Collegamenti e immagini
 
 ~~~markdown
-[Sito di Moji](https://github.com/alexishida/Moji)
+[Sito di ReadmeWeb](https://github.com/khanglq/ReadmeWeb)
 <https://example.com>
 [Collegamento di riferimento][ref]
 
@@ -127,7 +127,7 @@ I due punti nella riga di separazione definiscono l’allineamento delle colonne
 
 ## Formule matematiche
 
-Moji usa KaTeX. Inserisci una formula in linea tra `$...$` e una formula centrata tra `$$...$$`.
+ReadmeWeb usa KaTeX. Inserisci una formula in linea tra `$...$` e una formula centrata tra `$$...$$`.
 
 ~~~markdown
 L’energia è data da $E = mc^2$.
@@ -149,7 +149,7 @@ Tre caratteri `-`, `*` o `_` su una riga separata creano un divisore.
 
 ## HTML e caratteri di escape
 
-Moji accetta HTML sicuro e rimuove tag o attributi pericolosi prima dell’anteprima e dell’esportazione.
+ReadmeWeb accetta HTML sicuro e rimuove tag o attributi pericolosi prima dell’anteprima e dell’esportazione.
 
 ~~~html
 <details>
@@ -162,7 +162,7 @@ Inserisci `\` prima di un carattere Markdown per visualizzarlo letteralmente: `\
 
 ## Funzioni estese
 
-Moji supporta anche pedici, apici, evidenziazioni, inserimenti, emoji, note a piè di pagina, elenchi di definizioni e abbreviazioni.
+ReadmeWeb supporta anche pedici, apici, evidenziazioni, inserimenti, emoji, note a piè di pagina, elenchi di definizioni e abbreviazioni.
 
 ~~~markdown
 H~2~O e x^2^
@@ -180,7 +180,7 @@ Markdown
 
 ## Diagrammi Mermaid
 
-Moji visualizza i blocchi Mermaid nell’anteprima. Fai clic su un diagramma per ingrandirlo, spostarlo o esportarlo come PNG.
+ReadmeWeb visualizza i blocchi Mermaid nell’anteprima. Fai clic su un diagramma per ingrandirlo, spostarlo o esportarlo come PNG.
 
 ~~~markdown
 ```mermaid
@@ -206,4 +206,4 @@ flowchart LR
 
 ---
 
-> Guida creata per **Moji**, lettore ed editor Markdown. In modalità di modifica, il codice sorgente di questa guida rimane di sola lettura.
+> Guida creata per **ReadmeWeb**, lettore ed editor Markdown. In modalità di modifica, il codice sorgente di questa guida rimane di sola lettura.

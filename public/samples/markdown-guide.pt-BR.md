@@ -1,6 +1,6 @@
 # Guia Completo de Markdown
 
-Referência prática de Markdown para escrever, revisar e exportar documentos no **Moji**.
+Referência prática de Markdown para escrever, revisar e exportar documentos no **ReadmeWeb**.
 Cada seção mostra a sintaxe e, quando faz sentido, o resultado já renderizado.
 
 ## Sumário
@@ -28,7 +28,7 @@ Cada seção mostra a sintaxe e, quando faz sentido, o resultado já renderizado
 
 ## Títulos
 
-Use de um a seis `#` para criar títulos do nível 1 ao 6. O sumário lateral do Moji usa esses títulos para navegação, então mantenha os níveis em ordem.
+Use de um a seis `#` para criar títulos do nível 1 ao 6. O sumário lateral do ReadmeWeb usa esses títulos para navegação, então mantenha os níveis em ordem.
 
 ~~~markdown
 # Título de nível 1
@@ -151,7 +151,7 @@ Links internos apontam para o *slug* de um título (o mesmo que o sumário usa):
 Volte ao [Sumário](#sum%C3%A1rio).
 ~~~
 
-> No Moji, links `http`/`https` abrem no navegador do sistema, em nova aba, com `rel="noopener noreferrer"`.
+> No ReadmeWeb, links `http`/`https` abrem no navegador do sistema, em nova aba, com `rel="noopener noreferrer"`.
 
 ---
 
@@ -161,7 +161,7 @@ Mesma sintaxe dos links, com `!` na frente. O texto entre colchetes é o **texto
 
 ~~~markdown
 ![Texto alternativo descritivo](caminho/para/imagem.png)
-![Logo do Moji](./assets/logo.png "Título opcional")
+![Logo do ReadmeWeb](./assets/logo.png "Título opcional")
 ~~~
 
 Sempre descreva a imagem no texto alternativo — leitores de tela e a exportação dependem disso.
@@ -223,7 +223,7 @@ npm run dev
 
 ```json
 {
-  "name": "moji",
+  "name": "readmeweb",
   "version": "0.1.0"
 }
 ```
@@ -256,7 +256,7 @@ Resultado:
 
 Tabela comparativa mais densa:
 
-| Formato | Extensão   | Exporta no Moji | Ideal para          |
+| Formato | Extensão   | Exporta no ReadmeWeb | Ideal para          |
 | ------- | ---------- | :-------------: | ------------------- |
 | HTML    | `.html`    |       Sim       | Publicar na web     |
 | PDF     | `.pdf`     |       Sim       | Imprimir / arquivar |
@@ -342,7 +342,7 @@ $$
 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
 $$
 
-> **No Moji:** as fórmulas são renderizadas com **KaTeX** — `$…$` aparece na linha e `$$…$$` em bloco centralizado. Equações largas ganham rolagem horizontal, e uma fórmula inválida vira texto de erro em vermelho sem quebrar o resto do documento.
+> **No ReadmeWeb:** as fórmulas são renderizadas com **KaTeX** — `$…$` aparece na linha e `$$…$$` em bloco centralizado. Equações largas ganham rolagem horizontal, e uma fórmula inválida vira texto de erro em vermelho sem quebrar o resto do documento.
 
 ---
 
@@ -360,7 +360,7 @@ Produz um separador:
 
 ## HTML embutido
 
-Markdown aceita HTML puro para casos que a sintaxe não cobre. No Moji, tudo passa por **DOMPurify**: tags e atributos inseguros (como `<script>` ou `onclick`) são removidos antes da prévia e da exportação.
+Markdown aceita HTML puro para casos que a sintaxe não cobre. No ReadmeWeb, tudo passa por **DOMPurify**: tags e atributos inseguros (como `<script>` ou `onclick`) são removidos antes da prévia e da exportação.
 
 ~~~markdown
 <details>
@@ -420,7 +420,7 @@ Símbolos comuns via HTML: `&copy;` → &copy;, `&rarr;` → &rarr;, `&hearts;` 
 
 ## Recursos estendidos
 
-Além do Markdown básico, o Moji também renderiza extensões comuns.
+Além do Markdown básico, o ReadmeWeb também renderiza extensões comuns.
 
 **Subscrito e sobrescrito** — `~x~` e `^x^`:
 
@@ -488,7 +488,7 @@ KaTeX
 
 ## Diagramas Mermaid
 
-O Moji renderiza diagramas Mermaid na prévia. Clique em um diagrama renderizado para abrir o visualizador, aplicar zoom, arrastar e exportar como PNG.
+O ReadmeWeb renderiza diagramas Mermaid na prévia. Clique em um diagrama renderizado para abrir o visualizador, aplicar zoom, arrastar e exportar como PNG.
 
 **Fluxograma**:
 
@@ -536,4 +536,4 @@ pie title Tarefas
 
 ---
 
-> Guia gerado para o **Moji** · viewer e editor de Markdown. Abra este arquivo no app e alterne entre **edição** e **prévia** para ver cada exemplo.
+> Guia gerado para o **ReadmeWeb** · viewer e editor de Markdown. Abra este arquivo no app e alterne entre **edição** e **prévia** para ver cada exemplo.

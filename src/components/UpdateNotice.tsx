@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import type { UpdateState } from '../types/app'
 import { IconDownload, IconRefresh, IconX } from './icons'
 
-const RELEASES_URL = 'https://github.com/alexishida/Moji/releases'
+const RELEASES_URL = 'https://github.com/khanglq/ReadmeWeb/releases'
 
 interface UpdateNoticeProps {
   state: UpdateState

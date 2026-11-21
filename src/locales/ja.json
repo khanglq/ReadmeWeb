@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "無題",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "ドキュメントを開くか新規作成するとアウトラインが表示されます。"
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Markdown ガイド",
     "lineCount": "行数: {{count}}",
     "tokenCount": "トークン: {{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "軽くてシンプルな Markdown リーダー",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "ファイルを開く",
     "newButton": "新規ファイル",
     "dropHint": "または、このウィンドウのどこかに .md ファイルをドロップ",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "確認中...",
     "updateIdle": "バージョン {{version}}。新しいリリースを確認できます。",
     "updateChecking": "GitHub Releases を確認中...",
-    "updateCurrent": "Moji {{version}} は最新です。",
-    "updateAvailable": "Moji {{version}} を利用できます。",
+    "updateCurrent": "ReadmeWeb {{version}} は最新です。",
+    "updateAvailable": "ReadmeWeb {{version}} を利用できます。",
     "updateFailed": "更新を確認できませんでした。再試行してください。",
     "updateUnsupported": "このビルドでは更新確認を利用できません。",
     "openReleases": "更新",
-    "whyNameTitle": "なぜ Moji？",
-    "whyNameBody": "Moji は短く覚えやすく、文字や書くことを連想させます。この名前は、Markdown をスムーズに開き、編集し、プレビューし、エクスポートするという目的に合っています。余計な気を散らすものはありません。"
+    "whyNameTitle": "なぜ ReadmeWeb？",
+    "whyNameBody": "ReadmeWeb は短く覚えやすく、文字や書くことを連想させます。この名前は、Markdown をスムーズに開き、編集し、プレビューし、エクスポートするという目的に合っています。余計な気を散らすものはありません。"
   },
   "update": {
     "availableTitle": "新しいバージョンがあります",
-    "availableBody": "Moji {{version}} を GitHub Releases からダウンロードできます。",
+    "availableBody": "ReadmeWeb {{version}} を GitHub Releases からダウンロードできます。",
     "errorTitle": "更新に失敗しました",
     "errorBody": "{{error}}",
     "unknownError": "不明な更新エラー",
@@ -252,7 +252,11 @@
     "autoSaveCleanupFailed": "復元用下書きを削除できませんでした: {{error}}",
     "draftRestoreFailed": "復元用下書きを復元できませんでした: {{error}}",
     "openFailed": "ファイルを開けませんでした: {{error}}",
-    "errorReason": { "notFound": "ファイルが見つかりません。", "permissionDenied": "アクセスが拒否されました。", "busy": "ファイルは使用中です。" },
+    "errorReason": {
+      "notFound": "ファイルが見つかりません。",
+      "permissionDenied": "アクセスが拒否されました。",
+      "busy": "ファイルは使用中です。"
+    },
     "noDocument": "まずドキュメントを開いてください。",
     "readOnlyGuide": "付属の Markdown ガイドは読み取り専用のため保存できません。",
     "replaceNeedsSearch": "検索語を入力してください。",

@@ -1,6 +1,6 @@
 # Guía Completa de Markdown
 
-Referencia práctica de Markdown para escribir, revisar y exportar documentos en **Moji**.
+Referencia práctica de Markdown para escribir, revisar y exportar documentos en **ReadmeWeb**.
 Cada sección muestra la sintaxis y, cuando corresponde, el resultado ya renderizado.
 
 ## Índice
@@ -28,7 +28,7 @@ Cada sección muestra la sintaxis y, cuando corresponde, el resultado ya renderi
 
 ## Encabezados
 
-Usa de uno a seis `#` para crear encabezados del nivel 1 al 6. El esquema lateral de Moji usa estos encabezados para navegar, así que mantén los niveles en orden.
+Usa de uno a seis `#` para crear encabezados del nivel 1 al 6. El esquema lateral de ReadmeWeb usa estos encabezados para navegar, así que mantén los niveles en orden.
 
 ~~~markdown
 # Encabezado nivel 1
@@ -151,7 +151,7 @@ Los enlaces internos apuntan al *slug* de un encabezado (el mismo que usa el esq
 Vuelve al [Índice](#%C3%ADndice).
 ~~~
 
-> En Moji, los enlaces `http`/`https` se abren en el navegador del sistema, en una nueva pestaña, con `rel="noopener noreferrer"`.
+> En ReadmeWeb, los enlaces `http`/`https` se abren en el navegador del sistema, en una nueva pestaña, con `rel="noopener noreferrer"`.
 
 ---
 
@@ -161,7 +161,7 @@ Misma sintaxis que los enlaces, con `!` adelante. El texto entre corchetes es el
 
 ~~~markdown
 ![Texto alternativo descriptivo](ruta/a/imagen.png)
-![Logo de Moji](./assets/logo.png "Título opcional")
+![Logo de ReadmeWeb](./assets/logo.png "Título opcional")
 ~~~
 
 Siempre describe la imagen en el texto alternativo — los lectores de pantalla y la exportación dependen de ello.
@@ -223,7 +223,7 @@ npm run dev
 
 ```json
 {
-  "name": "moji",
+  "name": "readmeweb",
   "version": "0.1.0"
 }
 ```
@@ -256,7 +256,7 @@ Resultado:
 
 Tabla comparativa más densa:
 
-| Formato  | Extensión  | Exporta en Moji | Ideal para           |
+| Formato  | Extensión  | Exporta en ReadmeWeb | Ideal para           |
 | -------- | ---------- | :-------------: | -------------------- |
 | HTML     | `.html`    |       Sí        | Publicar en la web   |
 | PDF      | `.pdf`     |       Sí        | Imprimir / archivar  |
@@ -342,7 +342,7 @@ $$
 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
 $$
 
-> **En Moji:** las fórmulas se renderizan con **KaTeX** — `$…$` aparece en línea y `$$…$$` en bloque centrado. Las ecuaciones anchas obtienen desplazamiento horizontal, y una fórmula inválida se convierte en texto de error rojo sin romper el resto del documento.
+> **En ReadmeWeb:** las fórmulas se renderizan con **KaTeX** — `$…$` aparece en línea y `$$…$$` en bloque centrado. Las ecuaciones anchas obtienen desplazamiento horizontal, y una fórmula inválida se convierte en texto de error rojo sin romper el resto del documento.
 
 ---
 
@@ -360,7 +360,7 @@ Produce un separador:
 
 ## HTML embebido
 
-Markdown acepta HTML puro para casos que la sintaxis no cubre. En Moji, todo pasa por **DOMPurify**: las etiquetas y atributos inseguros (como `<script>` u `onclick`) se eliminan antes de la vista previa y la exportación.
+Markdown acepta HTML puro para casos que la sintaxis no cubre. En ReadmeWeb, todo pasa por **DOMPurify**: las etiquetas y atributos inseguros (como `<script>` u `onclick`) se eliminan antes de la vista previa y la exportación.
 
 ~~~markdown
 <details>
@@ -420,7 +420,7 @@ Símbolos comunes vía HTML: `&copy;` → &copy;, `&rarr;` → &rarr;, `&hearts;
 
 ## Funciones extendidas
 
-Más allá del Markdown básico, Moji también renderiza extensiones comunes.
+Más allá del Markdown básico, ReadmeWeb también renderiza extensiones comunes.
 
 **Subíndice y superíndice** — `~x~` y `^x^`:
 
@@ -488,7 +488,7 @@ KaTeX
 
 ## Diagramas Mermaid
 
-Moji renderiza diagramas Mermaid en la vista previa. Haz clic en un diagrama renderizado para abrir el visor, aplicar zoom, arrastrar y exportarlo como PNG.
+ReadmeWeb renderiza diagramas Mermaid en la vista previa. Haz clic en un diagrama renderizado para abrir el visor, aplicar zoom, arrastrar y exportarlo como PNG.
 
 **Diagrama de flujo**:
 
@@ -536,4 +536,4 @@ pie title Tareas
 
 ---
 
-> Guía generada para **Moji** · visor y editor de Markdown. Abre este archivo en la app y cambia entre **edición** y **vista previa** para ver cada ejemplo.
+> Guía generada para **ReadmeWeb** · visor y editor de Markdown. Abre este archivo en la app y cambia entre **edición** y **vista previa** para ver cada ejemplo.

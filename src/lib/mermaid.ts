@@ -71,7 +71,7 @@ async function loadMermaid(theme: Theme): Promise<Mermaid> {
 }
 
 async function renderDiagram(mermaid: Mermaid, source: string): Promise<string | null> {
-  const id = `moji-mermaid-${nextDiagramId++}`
+  const id = `readmeweb-mermaid-${nextDiagramId++}`
   try {
     const { svg } = await mermaid.render(id, source)
     return sanitizeSvg(svg) || null

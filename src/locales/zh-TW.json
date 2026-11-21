@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Moji v{{version}}",
+    "name": "ReadmeWeb v{{version}}",
     "untitled": "無標題",
     "modifiedMarker": "•"
   },
@@ -59,7 +59,7 @@
     "noDocument": "開啟或建立文件以檢視其大綱。"
   },
   "statusbar": {
-    "brand": "Moji v{{version}}",
+    "brand": "ReadmeWeb v{{version}}",
     "guide": "Markdown 指南",
     "lineCount": "行數：{{count}}",
     "tokenCount": "Token 數：{{count}}",
@@ -103,7 +103,7 @@
   },
   "welcome": {
     "tagline": "輕量簡潔的 Markdown 閱讀器",
-    "title": "Moji v{{version}}",
+    "title": "ReadmeWeb v{{version}}",
     "openButton": "開啟檔案",
     "newButton": "新增檔案",
     "dropHint": "或將 .md 檔案拖放至視窗任意位置",
@@ -202,17 +202,17 @@
     "checkingForUpdates": "正在檢查…",
     "updateIdle": "版本 {{version}}。檢查是否有較新版本。",
     "updateChecking": "正在檢查 GitHub Releases…",
-    "updateCurrent": "Moji {{version}} 已是最新版本。",
-    "updateAvailable": "Moji {{version}} 有更新版本可用。",
+    "updateCurrent": "ReadmeWeb {{version}} 已是最新版本。",
+    "updateAvailable": "ReadmeWeb {{version}} 有更新版本可用。",
     "updateFailed": "無法檢查更新項目。再試一次。",
     "updateUnsupported": "此版本不支援檢查更新項目。",
     "openReleases": "更新",
-    "whyNameTitle": "為什麼叫 Moji？",
-    "whyNameBody": "Moji 簡短、容易記住，讓人聯想到文字與書寫。這個名稱符合其用途：順暢地開啟、編輯、預覽與匯出 Markdown，避免干擾。"
+    "whyNameTitle": "為什麼叫 ReadmeWeb？",
+    "whyNameBody": "ReadmeWeb 簡短、容易記住，讓人聯想到文字與書寫。這個名稱符合其用途：順暢地開啟、編輯、預覽與匯出 Markdown，避免干擾。"
   },
   "update": {
     "availableTitle": "有新版本可用",
-    "availableBody": "Moji {{version}} 可從 GitHub Releases 下載。",
+    "availableBody": "ReadmeWeb {{version}} 可從 GitHub Releases 下載。",
     "errorTitle": "更新失敗",
     "errorBody": "{{error}}",
     "unknownError": "發生未知的更新錯誤",

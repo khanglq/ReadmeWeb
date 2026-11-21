@@ -1,6 +1,6 @@
 # Complete Markdown Guide
 
-A practical Markdown reference for writing, reviewing, and exporting documents in **Moji**.
+A practical Markdown reference for writing, reviewing, and exporting documents in **ReadmeWeb**.
 Each section shows the syntax and, where relevant, the rendered result.
 
 ## Table of Contents
@@ -28,7 +28,7 @@ Each section shows the syntax and, where relevant, the rendered result.
 
 ## Headings
 
-Use one to six `#` symbols to create headings from level 1 to 6. Moji's sidebar outline uses these headings for navigation, so keep levels in order.
+Use one to six `#` symbols to create headings from level 1 to 6. ReadmeWeb's sidebar outline uses these headings for navigation, so keep levels in order.
 
 ~~~markdown
 # Level 1 heading
@@ -151,7 +151,7 @@ Internal links point to a heading's *slug* (the same one the outline uses):
 Go back to [Table of Contents](#table-of-contents).
 ~~~
 
-> In Moji, `http`/`https` links open in the system browser, in a new tab, with `rel="noopener noreferrer"`.
+> In ReadmeWeb, `http`/`https` links open in the system browser, in a new tab, with `rel="noopener noreferrer"`.
 
 ---
 
@@ -161,7 +161,7 @@ Same syntax as links, with `!` in front. The text in brackets is the **alt text*
 
 ~~~markdown
 ![Descriptive alt text](path/to/image.png)
-![Moji logo](./assets/logo.png "Optional title")
+![ReadmeWeb logo](./assets/logo.png "Optional title")
 ~~~
 
 Always describe the image in the alt text — screen readers and the export feature depend on it.
@@ -223,7 +223,7 @@ npm run dev
 
 ```json
 {
-  "name": "moji",
+  "name": "readmeweb",
   "version": "0.1.0"
 }
 ```
@@ -256,7 +256,7 @@ Result:
 
 A denser comparison table:
 
-| Format   | Extension  | Exports in Moji | Best for            |
+| Format   | Extension  | Exports in ReadmeWeb | Best for            |
 | -------- | ---------- | :-------------: | ------------------- |
 | HTML     | `.html`    |       Yes       | Web publishing      |
 | PDF      | `.pdf`     |       Yes       | Print / archive     |
@@ -342,7 +342,7 @@ $$
 A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}
 $$
 
-> **In Moji:** formulas are rendered with **KaTeX** — `$…$` appears inline and `$$…$$` in a centered display block. Wide equations get horizontal scrolling, and an invalid formula turns into red error text without breaking the rest of the document.
+> **In ReadmeWeb:** formulas are rendered with **KaTeX** — `$…$` appears inline and `$$…$$` in a centered display block. Wide equations get horizontal scrolling, and an invalid formula turns into red error text without breaking the rest of the document.
 
 ---
 
@@ -360,7 +360,7 @@ Produces a separator:
 
 ## Embedded HTML
 
-Markdown accepts plain HTML for cases the syntax doesn't cover. In Moji, everything goes through **DOMPurify**: unsafe tags and attributes (like `<script>` or `onclick`) are removed before preview and export.
+Markdown accepts plain HTML for cases the syntax doesn't cover. In ReadmeWeb, everything goes through **DOMPurify**: unsafe tags and attributes (like `<script>` or `onclick`) are removed before preview and export.
 
 ~~~markdown
 <details>
@@ -420,7 +420,7 @@ Common symbols via HTML: `&copy;` → &copy;, `&rarr;` → &rarr;, `&hearts;` �
 
 ## Extended features
 
-Beyond basic Markdown, Moji also renders common extensions.
+Beyond basic Markdown, ReadmeWeb also renders common extensions.
 
 **Subscript and superscript** — `~x~` and `^x^`:
 
@@ -488,7 +488,7 @@ KaTeX
 
 ## Mermaid diagrams
 
-Moji renders Mermaid diagrams in the preview. Click a rendered diagram to open the viewer, zoom, pan, and export it as PNG.
+ReadmeWeb renders Mermaid diagrams in the preview. Click a rendered diagram to open the viewer, zoom, pan, and export it as PNG.
 
 **Flowchart**:
 
@@ -536,4 +536,4 @@ pie title Tasks
 
 ---
 
-> Guide generated for **Moji** · Markdown viewer and editor. Open this file in the app and switch between **edit** and **preview** to see each example.
+> Guide generated for **ReadmeWeb** · Markdown viewer and editor. Open this file in the app and switch between **edit** and **preview** to see each example.

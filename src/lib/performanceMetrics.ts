@@ -18,7 +18,7 @@ function appendMetric(metric: PerformanceMetric): void {
 
 /** Starts a local User Timing measurement. Document text and paths are never recorded. */
 export function beginRendererMeasure(name: string, initialDetails: MetricDetails = {}): (details?: MetricDetails) => void {
-  const id = `moji:${name}:${nextMetricId++}`
+  const id = `readmeweb:${name}:${nextMetricId++}`
   const startMark = `${id}:start`
   const endMark = `${id}:end`
   performance.mark(startMark)

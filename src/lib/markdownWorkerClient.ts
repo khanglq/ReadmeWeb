@@ -32,7 +32,7 @@ function resetWorker(error: Error): void {
 function createMarkdownWorker(): Worker {
   return new Worker(new URL('../workers/markdown.worker.ts', import.meta.url), {
     type: 'module',
-    name: 'moji-markdown-renderer'
+    name: 'readmeweb-markdown-renderer'
   })
 }
 
