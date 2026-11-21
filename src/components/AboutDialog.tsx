@@ -78,6 +78,12 @@ export function AboutDialog({ version, updateState, onClose, onCheckForUpdates }
                 https://github.com/khanglq/ReadmeWeb
               </a>
             </div>
+            <div className="about-dialog__row">
+              <span className="about-dialog__label">{t('aboutDialog.creditsLabel', 'Credits')}</span>
+              <span>
+                Based on <a className="about-dialog__link" href="https://github.com/alexishida/Moji" target="_blank" rel="noreferrer">Moji</a> by Alex Ishida
+              </span>
+            </div>
           </div>
         </section>
 

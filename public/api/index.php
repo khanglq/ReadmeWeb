@@ -33,7 +33,7 @@ function getConfigFile($root) {
 
 $configFile = getConfigFile($webRoot);
 
-function loadConfig($file) {
+function loadConfig($file, $webRoot = '') {
     if (file_exists($file)) {
         $raw = @file_get_contents($file);
         if ($raw !== false) {
@@ -43,7 +43,15 @@ function loadConfig($file) {
             }
         }
     }
-    return ['serverFolders' => []];
+    $defaultFolders = [];
+    if (!empty($webRoot) && is_dir($webRoot . '/docs')) {
+        $defaultFolders[] = [
+            'id' => 'folder-docs',
+            'name' => 'All docs of server',
+            'path' => 'docs'
+        ];
+    }
+    return ['serverFolders' => $defaultFolders];
 }
 
 function saveConfig(&$file, $config) {
@@ -137,7 +145,7 @@ function scanMarkdownFiles($dir, $baseDir, $rootId, $rootName, &$results, $ignor
 
 // 1. GET /api/server-folders
 if ($route === 'server-folders' && $method === 'GET') {
-    $config = loadConfig($configFile);
+    $config = loadConfig($configFile, $webRoot);
     jsonResponse([
         'ok' => true,
         'folders' => $config['serverFolders'],
@@ -186,7 +194,7 @@ if ($route === 'server-folders' && $method === 'POST') {
     }
 
     $folderPath = str_replace('\\', '/', $real);
-    $config = loadConfig($configFile);
+    $config = loadConfig($configFile, $webRoot);
 
     $id = 'folder-' . time() . '-' . mt_rand(100, 999);
     $newFolder = ['id' => $id, 'name' => $name, 'path' => $folderPath];
@@ -213,7 +221,7 @@ if ($route === 'server-folders' && $method === 'DELETE') {
         jsonResponse(['ok' => false, 'error' => 'Folder id is required'], 400);
     }
 
-    $config = loadConfig($configFile);
+    $config = loadConfig($configFile, $webRoot);
     $filtered = [];
     foreach ($config['serverFolders'] as $f) {
         if ($f['id'] !== $id) {
@@ -228,7 +236,7 @@ if ($route === 'server-folders' && $method === 'DELETE') {
 
 // 4. GET /api/server-documents
 if ($route === 'server-documents' && $method === 'GET') {
-    $config = loadConfig($configFile);
+    $config = loadConfig($configFile, $webRoot);
     $rootId = trim($_GET['rootId'] ?? '');
 
     $foldersToScan = [];
@@ -241,6 +249,12 @@ if ($route === 'server-documents' && $method === 'GET') {
     $documents = [];
     foreach ($foldersToScan as $f) {
         $p = str_replace('\\', '/', $f['path']);
+        if (!is_dir($p)) {
+            $candidate = $webRoot . '/' . ltrim($p, '/\\');
+            if (is_dir($candidate)) {
+                $p = $candidate;
+            }
+        }
         if (is_dir($p)) {
             scanMarkdownFiles($p, $p, $f['id'], $f['name'], $documents, $ignoredDirs);
         }
@@ -263,7 +277,7 @@ if ($route === 'read-server-document' && $method === 'GET') {
         jsonResponse(['ok' => false, 'error' => 'rootId and path are required'], 400);
     }
 
-    $config = loadConfig($configFile);
+    $config = loadConfig($configFile, $webRoot);
     $folder = null;
     foreach ($config['serverFolders'] as $f) {
         if ($f['id'] === $rootId) {
@@ -277,6 +291,10 @@ if ($route === 'read-server-document' && $method === 'GET') {
     }
 
     $base = realpath($folder['path']);
+    if ($base === false) {
+        $candidate = $webRoot . '/' . ltrim($folder['path'], '/\\');
+        $base = realpath($candidate);
+    }
     if ($base === false) {
         jsonResponse(['ok' => false, 'error' => 'Root folder path is invalid or missing on server'], 404);
     }
@@ -324,7 +342,7 @@ if ($route === 'save-server-document' && $method === 'POST') {
         jsonResponse(['ok' => false, 'error' => 'rootId, path, and content are required'], 400);
     }
 
-    $config = loadConfig($configFile);
+    $config = loadConfig($configFile, $webRoot);
     $folder = null;
     foreach ($config['serverFolders'] as $f) {
         if ($f['id'] === $rootId) {
@@ -338,6 +356,10 @@ if ($route === 'save-server-document' && $method === 'POST') {
     }
 
     $base = realpath($folder['path']);
+    if ($base === false) {
+        $candidate = $webRoot . '/' . ltrim($folder['path'], '/\\');
+        $base = realpath($candidate);
+    }
     if ($base === false) {
         jsonResponse(['ok' => false, 'error' => 'Root folder path is invalid or missing on server'], 404);
     }
