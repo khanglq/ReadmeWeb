@@ -24,11 +24,11 @@ function StatusBarView(props: StatusBarProps): JSX.Element {
       <div className="statusbar__right">
         <button className="statusbar__link" onClick={props.onGuide}>
           <IconBook width={14} height={14} />
-          {t('statusbar.guide')}
+          <span className="statusbar__guide-text">{t('statusbar.guide')}</span>
         </button>
-        <span className="statusbar__count">{t('statusbar.lineCount', { count: props.stats.lines })}</span>
-        <span className="statusbar__count">{t('statusbar.tokenCount', { count: props.stats.tokens })}</span>
-        <span className="statusbar__count">{t('statusbar.wordCount', { count: props.stats.words })}</span>
+        <span className="statusbar__count statusbar__count--lines">{t('statusbar.lineCount', { count: props.stats.lines })}</span>
+        <span className="statusbar__count statusbar__count--tokens">{t('statusbar.tokenCount', { count: props.stats.tokens })}</span>
+        <span className="statusbar__count statusbar__count--words">{t('statusbar.wordCount', { count: props.stats.words })}</span>
       </div>
     </footer>
   )

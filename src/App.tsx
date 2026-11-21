@@ -1275,6 +1275,9 @@ export function App(): JSX.Element {
   }, [closeDocuments])
 
   const scrollToHeading = useCallback((id: string) => {
+    if (window.innerWidth <= 768) {
+      setOutlineVisible(false)
+    }
     if (mode === 'edit') {
       const line = outlineRef.current.find((item) => item.id === id)?.sourceLine
       if (line === undefined) return
@@ -2000,13 +2003,20 @@ export function App(): JSX.Element {
 
       <div className="body">
         {hasDoc && !exportDialogFormat && !settingsOpen && !aboutOpen && outlineVisible && (
-          <Sidebar
-            hasDoc={hasDoc}
-            outline={outline}
-            activeId={activeHeadingId}
-            showOutline={!exportDialogFormat}
-            onSelectHeading={scrollToHeading}
-          />
+          <>
+            <div
+              className="sidebar-backdrop"
+              onClick={() => setOutlineVisible(false)}
+              aria-hidden="true"
+            />
+            <Sidebar
+              hasDoc={hasDoc}
+              outline={outline}
+              activeId={activeHeadingId}
+              showOutline={!exportDialogFormat}
+              onSelectHeading={scrollToHeading}
+            />
+          </>
         )}
 
         <main className="main" ref={mainRef}>

@@ -99,8 +99,7 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
   return (
     <div className="diagram-modal-backdrop" role="presentation" onMouseDown={onClose}>
       <div
-        className="diagram-modal"
-        style={{ width: '820px', maxWidth: '95vw', height: '620px', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}
+        className="diagram-modal server-dialog"
         role="dialog"
         aria-label={t('toolbar.serverDocuments', 'Server Documents')}
         onMouseDown={(e) => e.stopPropagation()}
@@ -130,24 +129,13 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
 
         {/* Add Folder Panel (collapsible) */}
         {showAddFolder && (
-          <form
-            onSubmit={handleAddFolder}
-            style={{
-              padding: '12px 16px',
-              backgroundColor: 'var(--bg-surface, #27272a)',
-              borderBottom: '1px solid var(--border-color, #3f3f46)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px'
-            }}
-          >
-            <div style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary, #f4f4f5)' }}>
+          <form onSubmit={handleAddFolder} className="server-dialog__add-form">
+            <div className="server-dialog__add-title">
               {t('server.addRootFolder', 'Add Root Folder on Server')}
             </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div className="server-dialog__add-fields">
               <input
-                className="topbar__search"
-                style={{ flex: 1 }}
+                className="topbar__search server-dialog__input"
                 type="text"
                 placeholder={t('server.folderNamePlaceholder', 'Folder Label (e.g. Project Docs)')}
                 value={newFolderName}
@@ -155,15 +143,14 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
                 required
               />
               <input
-                className="topbar__search"
-                style={{ flex: 2 }}
+                className="topbar__search server-dialog__input server-dialog__input--grow"
                 type="text"
                 placeholder={t('server.folderPathPlaceholder', 'Absolute Path on Server (e.g. E:/Projects/Docs)')}
                 value={newFolderPath}
                 onChange={(e) => setNewFolderPath(e.target.value)}
                 required
               />
-              <button className="btn" type="submit" disabled={addingFolder}>
+              <button className="btn btn--primary" type="submit" disabled={addingFolder}>
                 {addingFolder ? '...' : t('common.add', 'Add Folder')}
               </button>
             </div>
@@ -171,26 +158,16 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
         )}
 
         {/* Filter & Root Tabs */}
-        <div
-          style={{
-            padding: '12px 16px',
-            borderBottom: '1px solid var(--border-color, #3f3f46)',
-            display: 'flex',
-            gap: '12px',
-            alignItems: 'center',
-            flexWrap: 'wrap'
-          }}
-        >
+        <div className="server-dialog__filter-bar">
           <input
-            className="topbar__search"
-            style={{ minWidth: '220px', flex: 1 }}
+            className="topbar__search server-dialog__search"
             type="search"
             placeholder={t('server.searchPlaceholder', 'Filter markdown files...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
 
-          <div className="segment" role="tablist">
+          <div className="segment server-dialog__tabs" role="tablist">
             <button
               className={`segment__btn ${selectedRootId === 'all' ? 'segment__btn--active' : ''}`}
               onClick={() => setSelectedRootId('all')}
@@ -201,7 +178,7 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
             {folders.map((f) => {
               const count = documents.filter((d) => d.rootId === f.id).length
               return (
-                <div key={f.id} style={{ display: 'flex', alignItems: 'center' }}>
+                <div key={f.id} className="server-dialog__tab-item">
                   <button
                     className={`segment__btn ${selectedRootId === f.id ? 'segment__btn--active' : ''}`}
                     onClick={() => setSelectedRootId(f.id)}
@@ -214,8 +191,7 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
                   {folders.length > 1 && (
                     <button
                       type="button"
-                      className="iconbtn"
-                      style={{ padding: '2px', opacity: 0.6 }}
+                      className="iconbtn server-dialog__folder-remove"
                       onClick={() => handleRemoveFolder(f.id, f.name)}
                       title={`Remove ${f.name}`}
                     >
@@ -230,89 +206,50 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
 
         {/* Error notice */}
         {error && (
-          <div style={{ padding: '8px 16px', color: '#f87171', fontSize: '12px', backgroundColor: 'rgba(239, 68, 68, 0.1)' }}>
+          <div className="server-dialog__error">
             {error}
           </div>
         )}
 
         {/* Document List */}
-        <div style={{ flex: 1, overflowY: 'auto', padding: '8px 16px' }}>
+        <div className="server-dialog__body">
           {loading ? (
-            <div style={{ padding: '32px', textAlign: 'center', color: 'var(--text-muted)' }}>
+            <div className="server-dialog__empty">
               {t('common.loading', 'Loading documents from server...')}
             </div>
           ) : filteredDocs.length === 0 ? (
-            <div style={{ padding: '48px', textAlign: 'center', color: 'var(--text-muted)' }}>
-              <div style={{ fontSize: '15px', marginBottom: '8px' }}>
+            <div className="server-dialog__empty">
+              <div className="server-dialog__empty-title">
                 {t('server.noDocumentsFound', 'No markdown files found')}
               </div>
-              <div style={{ fontSize: '13px' }}>
+              <div className="server-dialog__empty-subtitle">
                 {searchQuery
                   ? t('server.noMatch', 'No files match your search query.')
                   : t('server.noFilesTip', 'Configure a root folder containing .md files using the button above.')}
               </div>
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '4px' }}>
+            <div className="server-dialog__list">
               {filteredDocs.map((doc) => (
                 <div
                   key={`${doc.rootId}-${doc.relativePath}`}
+                  className="server-dialog__item"
                   onClick={() => onSelectDocument(doc)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: '6px',
-                    backgroundColor: 'transparent',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.15s ease',
-                    border: '1px solid transparent'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--bg-surface, #27272a)'
-                    e.currentTarget.style.borderColor = 'var(--border-color, #3f3f46)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent'
-                    e.currentTarget.style.borderColor = 'transparent'
-                  }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
-                    <span style={{ color: 'var(--accent-color, #38bdf8)' }}>
-                      📄
-                    </span>
-                    <div style={{ minWidth: 0 }}>
-                      <div
-                        style={{
-                          fontWeight: 500,
-                          fontSize: '14px',
-                          color: 'var(--text-primary, #f4f4f5)',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
+                  <div className="server-dialog__item-main">
+                    <span className="server-dialog__item-icon">📄</span>
+                    <div className="server-dialog__item-text">
+                      <div className="server-dialog__item-name">
                         {doc.name}
                       </div>
-                      <div
-                        style={{
-                          fontSize: '12px',
-                          color: 'var(--text-muted, #a1a1aa)',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
-                        <span style={{ color: 'var(--accent-color, #38bdf8)', opacity: 0.8 }}>
-                          [{doc.rootName}]
-                        </span>{' '}
+                      <div className="server-dialog__item-path">
+                        <span className="server-dialog__item-root">[{doc.rootName}]</span>{' '}
                         {doc.relativePath}
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexShrink: 0, fontSize: '12px', color: 'var(--text-muted, #a1a1aa)' }}>
+                  <div className="server-dialog__item-meta">
                     <span>{formatBytes(doc.sizeBytes)}</span>
                     <span>{formatDate(doc.lastModified)}</span>
                   </div>

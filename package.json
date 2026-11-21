@@ -1,11 +1,12 @@
 {
   "name": "readmeweb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Clean, lightweight Markdown viewer and editor on the web",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "start": "node server.js",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

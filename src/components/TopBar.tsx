@@ -142,12 +142,12 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
           <div className="filegroup" role="group" aria-label={t('toolbar.viewMode')}>
             <button className="filegroup__btn" onClick={props.onNew} title={t('toolbar.newDocument')}>
               <IconFilePlus width={15} height={15} />
-              {t('toolbar.newDocument')}
+              <span className="filegroup__label">{t('toolbar.newDocument')}</span>
             </button>
 
             <button className="filegroup__btn" onClick={props.onOpen} title={t('toolbar.open')}>
               <IconOpen width={15} height={15} />
-              {t('toolbar.open')}
+              <span className="filegroup__label">{t('toolbar.open')}</span>
             </button>
 
             <button
@@ -156,7 +156,7 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
               title={t('toolbar.serverDocuments', 'Server Documents')}
             >
               <IconServer width={15} height={15} />
-              {t('toolbar.serverDocuments', 'Server Documents')}
+              <span className="filegroup__label">{t('toolbar.serverDocuments', 'Server Documents')}</span>
             </button>
 
             <button
@@ -166,7 +166,7 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
               title={props.readOnly ? t('notice.readOnlyGuide') : t('toolbar.save')}
             >
               <IconSave width={15} height={15} />
-              {t('toolbar.save')}
+              <span className="filegroup__label">{t('toolbar.save')}</span>
             </button>
           </div>
         </div>
@@ -286,10 +286,11 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
               onClick={() => props.onSetMode('view')}
               disabled={!props.hasDoc}
               role="tab"
+              title={t('toolbar.preview')}
               aria-selected={!props.exportOpen && !props.settingsOpen && !props.aboutOpen && props.mode === 'view'}
             >
               <IconEye width={15} height={15} />
-              {t('toolbar.preview')}
+              <span className="segment__label">{t('toolbar.preview')}</span>
             </button>
             <button
               className={`segment__btn ${
@@ -300,27 +301,29 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
               onClick={() => props.onSetMode('edit')}
               disabled={!props.hasDoc}
               role="tab"
+              title={t('toolbar.editor')}
               aria-selected={!props.exportOpen && !props.settingsOpen && !props.aboutOpen && props.mode === 'edit'}
             >
               <IconPencil width={15} height={15} />
-              {t('toolbar.editor')}
+              <span className="segment__label">{t('toolbar.editor')}</span>
             </button>
             <button
               className={`segment__btn ${props.exportOpen ? 'segment__btn--active' : ''}`}
               onClick={() => props.onExport('pdf')}
               disabled={!props.hasDoc}
               role="tab"
+              title={t('toolbar.export')}
               aria-selected={props.exportOpen}
             >
               <IconDownload width={15} height={15} />
-              {t('toolbar.export')}
+              <span className="segment__label">{t('toolbar.export')}</span>
             </button>
           </div>
         </div>
 
         <div className="topbar__right">
           <button
-            className={`iconbtn ${props.outlineVisible && props.canToggleOutline ? 'iconbtn--active' : ''}`}
+            className={`iconbtn topbar__btn--outline ${props.outlineVisible && props.canToggleOutline ? 'iconbtn--active' : ''}`}
             type="button"
             onClick={props.onToggleOutline}
             disabled={!props.canToggleOutline}
@@ -332,7 +335,7 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
           </button>
 
           <button
-            className={`iconbtn ${props.splitView && props.canToggleSplit ? 'iconbtn--active' : ''}`}
+            className={`iconbtn topbar__btn--split ${props.splitView && props.canToggleSplit ? 'iconbtn--active' : ''}`}
             type="button"
             onClick={props.onToggleSplit}
             disabled={!props.canToggleSplit}
@@ -350,7 +353,7 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
           </button>
 
           <button
-            className={`iconbtn ${props.previewFluidWidth ? 'iconbtn--active' : ''}`}
+            className={`iconbtn topbar__btn--width ${props.previewFluidWidth ? 'iconbtn--active' : ''}`}
             type="button"
             onClick={props.onTogglePreviewWidth}
             disabled={!props.canTogglePreviewWidth}
@@ -361,17 +364,19 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
             <IconLayoutWidth />
           </button>
 
-          <FontSizeButton
-            value={props.fontSize}
-            min={props.minFontSize}
-            max={props.maxFontSize}
-            defaultValue={props.defaultFontSize}
-            disabled={!props.canAdjustFontSize}
-            onChange={props.onFontSizeChange}
-          />
+          <div className="topbar__fontsize-wrapper">
+            <FontSizeButton
+              value={props.fontSize}
+              min={props.minFontSize}
+              max={props.maxFontSize}
+              defaultValue={props.defaultFontSize}
+              disabled={!props.canAdjustFontSize}
+              onChange={props.onFontSizeChange}
+            />
+          </div>
 
           <button
-            className="iconbtn"
+            className="iconbtn topbar__btn--theme"
             onClick={props.onToggleTheme}
             disabled={!props.canToggleTheme}
             title={props.theme === 'dark' ? t('toolbar.themeLight') : t('toolbar.themeDark')}
@@ -380,13 +385,15 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
             {props.theme === 'dark' ? <IconSun /> : <IconMoon />}
           </button>
 
-          <SettingsButton
-            active={props.settingsOpen}
-            onClick={props.onOpenSettings}
-          />
+          <div className="topbar__settings-wrapper">
+            <SettingsButton
+              active={props.settingsOpen}
+              onClick={props.onOpenSettings}
+            />
+          </div>
 
           <button
-            className={`iconbtn ${props.aboutOpen ? 'iconbtn--active' : ''}`}
+            className={`iconbtn topbar__btn--about ${props.aboutOpen ? 'iconbtn--active' : ''}`}
             onClick={props.onOpenAbout}
             title={t('toolbar.about')}
             aria-label={t('toolbar.about')}

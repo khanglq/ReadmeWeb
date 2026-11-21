@@ -1,0 +1,34 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Deny access to configuration files and sensitive dotfiles
+  RewriteRule ^readmeweb\.config\.json$ - [F,L]
+  RewriteRule (^|/)\.(?!well-known) - [F,L]
+
+  # 2. Route API calls to PHP backend (api/index.php)
+  RewriteRule ^api/(.*)$ api/index.php?route=$1 [QSA,L]
+  RewriteRule ^api/?$ api/index.php [QSA,L]
+
+  # 3. Direct access to existing files and directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 4. SPA Fallback: Route all other requests to index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# MIME type settings for web assets
+<IfModule mod_mime.c>
+  AddType application/javascript .js
+  AddType application/json .json
+  AddType text/css .css
+  AddType image/svg+xml .svg
+  AddType text/markdown .md
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>

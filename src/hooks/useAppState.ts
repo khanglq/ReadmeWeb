@@ -52,7 +52,7 @@ export function usePanelState() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [serverDocOpen, setServerDocOpen] = useState(false)
-  const [outlineVisible, setOutlineVisible] = useState(true)
+  const [outlineVisible, setOutlineVisible] = useState(() => typeof window !== 'undefined' ? window.innerWidth > 768 : true)
   const [searchFocusRequest, setSearchFocusRequest] = useState(0)
   const [replaceFocusRequest, setReplaceFocusRequest] = useState(0)
   const [topBarDismissRequest, setTopBarDismissRequest] = useState(0)
