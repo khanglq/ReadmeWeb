@@ -1,0 +1,101 @@
+/* Design tokens — single source of truth for color, type, spacing.
+   Mirrored in .ai-framework/DESIGN.md.
+   App chrome is always dark. [data-md-theme] scopes the markdown preview. */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, sans-serif;
+  --font-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --reading-width: 760px;
+  --reading-width-min: 480px;
+  --reading-width-fluid: 100%;
+  --radius: 8px;
+  --radius-sm: 5px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  --toolbar-h: 44px;
+  --topbar-h: 52px;
+  --statusbar-h: 34px;
+  --sidebar-w: 260px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.06);
+
+  /* dark theme — app chrome + markdown default */
+  --bg: #1e1e1e;
+  --bg-elevated: #252526;
+  --bg-inset: #2b2b2b;
+  --text: #e7e7e7;
+  --text-muted: #9aa0a6;
+  --border: #3a3a3a;
+  --border-strong: #4a4a4a;
+  --accent: #4c9aff;
+  --accent-hover: #63a9ff;
+  --accent-contrast: #0b1a33;
+  --code-bg: #282c34;
+  --code-text: #abb2bf;
+  --code-border: #3a404b;
+  --table-header-bg: #252526;
+  --table-stripe-bg: #252526;
+  --danger: #ff6b6b;
+
+  /* app chrome (dark) */
+  --brand: #6ea8ff;
+  --sidebar-bg: #1a1a1b;
+  --chrome-bg: #202021;
+  --nav-hover-bg: #2a2a2c;
+  --nav-active-bg: #24314a;
+  --nav-active-text: #7cb0ff;
+  --segment-track: #2a2a2c;
+  --segment-active-bg: #38383a;
+  --scrollbar-track: #202021;
+  --scrollbar-thumb: #4c9aff;
+  --scrollbar-thumb-hover: #63a9ff;
+
+  /* modal chrome stays dark even while Markdown preview is light */
+  --modal-bg: #202021;
+  --modal-surface: #252526;
+  --modal-inset: #2b2b2b;
+  --modal-text: #e7e7e7;
+  --modal-text-muted: #9aa0a6;
+  --modal-border: #3a3a3a;
+
+  /* highlight.js tokens (One Dark Pro) */
+  --hl-comment: #5c6370;
+  --hl-keyword: #c678dd;
+  --hl-string: #98c379;
+  --hl-number: #d19a66;
+  --hl-title: #61afef;
+  --hl-attr: #e06c75;
+  --hl-symbol: #56b6c2;
+}
+
+/* Light markdown preview overrides — only affects descendants */
+[data-md-theme='light'] {
+  --bg: #ffffff;
+  --bg-elevated: #f6f7f9;
+  --text: #1f2328;
+  --text-muted: #656d76;
+  --border: #d5dae0;
+  --border-strong: #c2c9d1;
+  --accent: #2f6fed;
+  --code-bg: #f4f6f8;
+  --code-text: #24292f;
+  --code-border: #d8dee4;
+  --table-header-bg: #f8fafc;
+  --table-stripe-bg: #f5f7fa;
+  --scrollbar-track: #f6f7f9;
+  --scrollbar-thumb: #2f6fed;
+  --scrollbar-thumb-hover: #1f5dd6;
+
+  --hl-comment: #6a737d;
+  --hl-keyword: #d73a49;
+  --hl-string: #032f62;
+  --hl-number: #005cc5;
+  --hl-title: #6f42c1;
+  --hl-attr: #e36209;
+  --hl-symbol: #22863a;
+}

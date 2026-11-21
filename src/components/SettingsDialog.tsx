@@ -1,0 +1,337 @@
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { LANGUAGES } from '../i18n'
+import { IconSettings, IconX } from './icons'
+import { MAX_RECENT_FILES_MAX, MAX_RECENT_FILES_MIN, PREVIEW_WIDTH_MAX, PREVIEW_WIDTH_MIN, PREVIEW_WIDTH_STEP, type Language, type Settings } from '../types/app'
+
+interface SettingsDialogProps {
+  settings: Settings
+  onClose: () => void
+  onChange: (patch: Partial<Settings>) => void
+}
+
+const FONT_FAMILIES = [
+  { value: 'Inter', label: 'Inter' },
+  { value: 'system-ui', label: 'system-ui' },
+  { value: 'serif', label: 'serif' },
+  { value: 'monospace', label: 'monospace' }
+]
+
+const PREVIEW_WIDTHS = Array.from(
+  { length: (PREVIEW_WIDTH_MAX - PREVIEW_WIDTH_MIN) / PREVIEW_WIDTH_STEP + 1 },
+  (_, i) => PREVIEW_WIDTH_MIN + i * PREVIEW_WIDTH_STEP
+)
+
+interface ShortcutItem {
+  action: string
+  keys: readonly string[]
+  /** A second chord that performs the same action, shown alongside the primary one. */
+  altKeys?: readonly string[]
+}
+
+interface ShortcutSection {
+  key: string
+  items: readonly ShortcutItem[]
+}
+
+const SHORTCUT_SECTIONS: readonly ShortcutSection[] = [
+  {
+    key: 'file',
+    items: [
+      { action: 'newDocument', keys: ['Ctrl', 'N'] },
+      { action: 'open', keys: ['Ctrl', 'O'] },
+      { action: 'save', keys: ['Ctrl', 'S'] },
+      { action: 'saveAs', keys: ['Ctrl', 'Shift', 'S'] },
+      { action: 'closeTab', keys: ['Ctrl', 'W'] },
+      { action: 'quit', keys: ['Ctrl', 'Q'] }
+    ]
+  },
+  {
+    key: 'search',
+    items: [
+      { action: 'search', keys: ['Ctrl', 'F'] },
+      { action: 'replace', keys: ['Ctrl', 'H'] },
+      { action: 'findNext', keys: ['F3'], altKeys: ['Ctrl', 'G'] },
+      { action: 'findPrevious', keys: ['Shift', 'F3'], altKeys: ['Ctrl', 'Shift', 'G'] }
+    ]
+  },
+  {
+    key: 'view',
+    items: [
+      { action: 'toggleEdit', keys: ['Ctrl', 'E'] },
+      { action: 'toggleSplit', keys: ['Ctrl', '\\'] },
+      { action: 'export', keys: ['Ctrl', 'Shift', 'E'] },
+      { action: 'settings', keys: ['Ctrl', ','] },
+      { action: 'fullscreen', keys: ['F11'] },
+      { action: 'closePanel', keys: ['Esc'] }
+    ]
+  },
+  {
+    key: 'font',
+    items: [
+      { action: 'increaseFont', keys: ['Ctrl', '+'] },
+      { action: 'increaseFontAlt', keys: ['Ctrl', '='] },
+      { action: 'decreaseFont', keys: ['Ctrl', '-'] },
+      { action: 'resetFont', keys: ['Ctrl', '0'] }
+    ]
+  },
+  {
+    key: 'tabs',
+    items: [
+      { action: 'nextTab', keys: ['Ctrl', 'Tab'] },
+      { action: 'previousTab', keys: ['Ctrl', 'Shift', 'Tab'] }
+    ]
+  },
+  {
+    key: 'editor',
+    items: [
+      { action: 'bold', keys: ['Ctrl', 'B'] },
+      { action: 'italic', keys: ['Ctrl', 'I'] },
+      { action: 'link', keys: ['Ctrl', 'K'] },
+      { action: 'list', keys: ['Ctrl', 'L'] },
+      { action: 'checklist', keys: ['Ctrl', 'Shift', 'L'] },
+      { action: 'codeBlock', keys: ['Ctrl', 'Shift', 'K'] },
+      { action: 'indent', keys: ['Tab'] },
+      { action: 'outdent', keys: ['Shift', 'Tab'] },
+      { action: 'exitFocus', keys: ['Ctrl', 'M'] }
+    ]
+  }
+]
+
+type SettingsTab = 'general' | 'preview' | 'editor' | 'shortcuts'
+
+// The app's own keydown handler already treats Cmd as the primary modifier on macOS
+// (`event.ctrlKey || event.metaKey`), so the shortcut list must not print "Ctrl" there too.
+const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.userAgent)
+
+function platformKeyLabel(key: string): string {
+  return isMac && key === 'Ctrl' ? '⌘' : key
+}
+
+export function SettingsDialog({ settings, onClose, onChange }: SettingsDialogProps): JSX.Element {
+  const { t } = useTranslation()
+  const [activeTab, setActiveTab] = useState<SettingsTab>('general')
+
+  return (
+    <section className="export-dialog settings-dialog" aria-label={t('settingsDialog.title')}>
+      <header className="export-dialog__header">
+        <h2 className="export-dialog__title">
+          <IconSettings width={18} height={18} aria-hidden="true" />
+          <span>{t('settingsDialog.title')}</span>
+        </h2>
+        <button className="iconbtn" onClick={onClose} title={t('dialog.cancel')} aria-label={t('dialog.cancel')}>
+          <IconX />
+        </button>
+      </header>
+
+      <div className="settings-dialog__body">
+        <div className="settings-tabs" role="tablist" aria-label={t('settingsDialog.title')}>
+          {(['general', 'preview', 'editor', 'shortcuts'] as const).map((tab) => (
+            <button
+              key={tab}
+              className={`settings-tabs__button ${activeTab === tab ? 'settings-tabs__button--active' : ''}`}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+            >
+              {t(`settingsDialog.${tab}`)}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === 'general' && (
+          <section className="settings-section" aria-labelledby="settings-general-heading">
+            <h3 className="settings-section__heading" id="settings-general-heading">
+              {t('settingsDialog.general')}
+            </h3>
+
+            <div className="settings-field-list">
+              <label className="settings-field">
+                <span className="settings-field__label">{t('toolbar.language')}</span>
+                <select
+                  className="select settings-field__control"
+                  value={settings.language}
+                  onChange={(e) => onChange({ language: e.target.value as Language })}
+                >
+                  {LANGUAGES.map((language) => (
+                    <option key={language.code} value={language.code}>
+                      {language.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.autoSave')}</span>
+                <input
+                  className="settings-checkbox"
+                  type="checkbox"
+                  checked={settings.autoSave}
+                  onChange={(e) => onChange({ autoSave: e.currentTarget.checked })}
+                />
+              </label>
+
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.maxRecentFiles')}</span>
+                <input
+                  className="input settings-field__control"
+                  type="number"
+                  min={MAX_RECENT_FILES_MIN}
+                  max={MAX_RECENT_FILES_MAX}
+                  step={1}
+                  value={settings.maxRecentFiles}
+                  onChange={(e) => {
+                    if (Number.isFinite(e.currentTarget.valueAsNumber)) {
+                      onChange({ maxRecentFiles: e.currentTarget.valueAsNumber })
+                    }
+                  }}
+                />
+              </label>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'preview' && (
+          <section className="settings-section" aria-labelledby="settings-preview-heading">
+            <h3 className="settings-section__heading" id="settings-preview-heading">
+              {t('settingsDialog.preview')}
+            </h3>
+
+            <div className="settings-field-list">
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.fontFamily')}</span>
+                <select
+                  className="select settings-field__control"
+                  value={settings.previewFontFamily}
+                  onChange={(e) => onChange({ previewFontFamily: e.target.value })}
+                >
+                  {FONT_FAMILIES.map((font) => (
+                    <option key={font.value} value={font.value}>
+                      {font.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.fontSize')}</span>
+                <input
+                  className="input settings-field__control"
+                  type="number"
+                  min={12}
+                  max={24}
+                  step={1}
+                  value={settings.previewFontSize}
+                  onChange={(e) => {
+                    if (Number.isFinite(e.currentTarget.valueAsNumber)) {
+                      onChange({ previewFontSize: e.currentTarget.valueAsNumber })
+                    }
+                  }}
+                />
+              </label>
+
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.lineHeight')}</span>
+                <input
+                  className="input settings-field__control"
+                  type="number"
+                  min={1.2}
+                  max={2.4}
+                  step={0.1}
+                  value={settings.previewLineHeight}
+                  onChange={(e) => {
+                    if (Number.isFinite(e.currentTarget.valueAsNumber)) {
+                      onChange({ previewLineHeight: e.currentTarget.valueAsNumber })
+                    }
+                  }}
+                />
+              </label>
+
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.width')}</span>
+                <select
+                  className="select settings-field__control"
+                  value={settings.previewWidth}
+                  onChange={(e) => onChange({ previewWidth: Number(e.target.value) })}
+                >
+                  {PREVIEW_WIDTHS.map((width) => (
+                    <option key={width} value={width}>
+                      {width}%
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'editor' && (
+          <section className="settings-section" aria-labelledby="settings-editor-heading">
+            <h3 className="settings-section__heading" id="settings-editor-heading">
+              {t('settingsDialog.editor')}
+            </h3>
+
+            <div className="settings-field-list">
+              <label className="settings-field">
+                <span className="settings-field__label">{t('settingsDialog.fontSize')}</span>
+                <input
+                  className="input settings-field__control"
+                  type="number"
+                  min={12}
+                  max={24}
+                  step={1}
+                  value={settings.editorFontSize}
+                  onChange={(e) => {
+                    if (Number.isFinite(e.currentTarget.valueAsNumber)) {
+                      onChange({ editorFontSize: e.currentTarget.valueAsNumber })
+                    }
+                  }}
+                />
+              </label>
+            </div>
+          </section>
+        )}
+
+        {activeTab === 'shortcuts' && (
+          <div className="settings-shortcuts" aria-label={t('settingsDialog.shortcuts')}>
+            {SHORTCUT_SECTIONS.map((section) => (
+              <section className="settings-section" key={section.key}>
+                <h3 className="settings-section__heading">
+                  {t(`settingsDialog.shortcutSections.${section.key}`)}
+                </h3>
+
+                <div className="settings-shortcut-list">
+                  {section.items.map((item) => (
+                    <div className="settings-shortcut" key={item.action}>
+                      <span className="settings-shortcut__label">
+                        {t(`settingsDialog.shortcutActions.${item.action}`)}
+                      </span>
+                      <span className="settings-shortcut__keys">
+                        {item.keys.map((key) => (
+                          <kbd className="settings-shortcut__key" key={key}>
+                            {platformKeyLabel(key)}
+                          </kbd>
+                        ))}
+                        {item.altKeys && (
+                          <>
+                            <span className="settings-shortcut__key-or">{t('settingsDialog.shortcutOr')}</span>
+                            {item.altKeys.map((key) => (
+                              <kbd className="settings-shortcut__key" key={key}>
+                                {platformKeyLabel(key)}
+                              </kbd>
+                            ))}
+                          </>
+                        )}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
