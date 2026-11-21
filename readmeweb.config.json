@@ -1,0 +1,19 @@
+{
+  "serverFolders": [
+    {
+      "id": "readmeweb-code",
+      "name": "ReadmeWeb Code",
+      "path": "e:/Code/UtilProjects/readmeweb"
+    },
+    {
+      "id": "readmeweb-project",
+      "name": "ReadmeWeb Project & Docs",
+      "path": "E:/Projects/UtilProjects/readmeweb"
+    },
+    {
+      "id": "moji-project",
+      "name": "Moji Desktop Code",
+      "path": "e:/Code/UtilProjects/Moji"
+    }
+  ]
+}

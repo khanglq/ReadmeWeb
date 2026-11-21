@@ -2,7 +2,7 @@ import { memo, useState, useCallback, useEffect, useRef, type ChangeEvent, type 
 import { useTranslation } from 'react-i18next'
 import { SettingsButton } from './SettingsButton'
 import { FontSizeButton } from './FontSizeButton'
-import { IconMoon, IconSun, IconEye, IconPencil, IconDownload, IconOpen, IconFilePlus, IconSave, IconInfo, IconReplace, IconReplaceAll, IconX, IconLayoutWidth, IconSidebar, IconSplitPreview, IconChevronRight } from './icons'
+import { IconMoon, IconSun, IconEye, IconPencil, IconDownload, IconOpen, IconFilePlus, IconSave, IconInfo, IconReplace, IconReplaceAll, IconX, IconLayoutWidth, IconSidebar, IconSplitPreview, IconChevronRight, IconServer } from './icons'
 import type { ExportFormat, Theme } from '../types/app'
 
 interface TopBarProps {
@@ -16,6 +16,7 @@ interface TopBarProps {
   theme: Theme
   onSetMode: (mode: 'view' | 'edit') => void
   onOpen: () => void
+  onOpenServerDocuments: () => void
   onSave: () => void
   onNew: () => void
   onToggleTheme: () => void
@@ -147,6 +148,15 @@ export const TopBar = memo(function TopBar(props: TopBarProps): JSX.Element {
             <button className="filegroup__btn" onClick={props.onOpen} title={t('toolbar.open')}>
               <IconOpen width={15} height={15} />
               {t('toolbar.open')}
+            </button>
+
+            <button
+              className="filegroup__btn"
+              onClick={props.onOpenServerDocuments}
+              title={t('toolbar.serverDocuments', 'Server Documents')}
+            >
+              <IconServer width={15} height={15} />
+              {t('toolbar.serverDocuments', 'Server Documents')}
             </button>
 
             <button

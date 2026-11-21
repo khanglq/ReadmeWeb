@@ -15,6 +15,10 @@ export interface WorkspaceDocument {
   readOnly: boolean
   sizeProfile?: DocumentSizeProfile
   handle?: FileSystemFileHandle
+  serverDoc?: {
+    rootId: string
+    relativePath: string
+  }
 }
 
 export function useSettingsState() {
@@ -47,11 +51,31 @@ export function usePanelState() {
   const [exportDialogFormat, setExportDialogFormat] = useState<ExportFormat | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
+  const [serverDocOpen, setServerDocOpen] = useState(false)
   const [outlineVisible, setOutlineVisible] = useState(true)
   const [searchFocusRequest, setSearchFocusRequest] = useState(0)
   const [replaceFocusRequest, setReplaceFocusRequest] = useState(0)
   const [topBarDismissRequest, setTopBarDismissRequest] = useState(0)
-  return { dialogOpen, setDialogOpen, exportDialogFormat, setExportDialogFormat, settingsOpen, setSettingsOpen, aboutOpen, setAboutOpen, outlineVisible, setOutlineVisible, searchFocusRequest, setSearchFocusRequest, replaceFocusRequest, setReplaceFocusRequest, topBarDismissRequest, setTopBarDismissRequest }
+  return {
+    dialogOpen,
+    setDialogOpen,
+    exportDialogFormat,
+    setExportDialogFormat,
+    settingsOpen,
+    setSettingsOpen,
+    aboutOpen,
+    setAboutOpen,
+    serverDocOpen,
+    setServerDocOpen,
+    outlineVisible,
+    setOutlineVisible,
+    searchFocusRequest,
+    setSearchFocusRequest,
+    replaceFocusRequest,
+    setReplaceFocusRequest,
+    topBarDismissRequest,
+    setTopBarDismissRequest
+  }
 }
 
 export function useUpdateState() {

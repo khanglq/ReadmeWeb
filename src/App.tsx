@@ -12,6 +12,7 @@ import type { ExportDialogOptions } from './components/ExportDialog'
 import type { EditorDocumentStats, EditorHandle, EditorIdleStats } from './components/Editor'
 import { SettingsDialog } from './components/SettingsDialog'
 import { AboutDialog } from './components/AboutDialog'
+import { ServerDocumentsDialog } from './components/ServerDocumentsDialog'
 import { UpdateNotice } from './components/UpdateNotice'
 import { ExportProgress } from './components/ExportProgress'
 import { OpenProgress } from './components/OpenProgress'
@@ -36,6 +37,7 @@ import {
   AUTO_SAVE_DELAY_MS,
   MAX_RECENT_FILES,
   SPLIT_MIN_WIDTH_PX,
+  computeSizeProfile,
   type DocumentSizeProfile,
   type DraftEditPayload,
   type ExportFormat,
@@ -47,6 +49,7 @@ import { draftService } from './services/draftService'
 import { fileService } from './services/fileService'
 import { exportService } from './services/exportService'
 import { assetService } from './services/assetService'
+import { serverDocService, type ServerDocItem } from './services/serverDocService'
 import packageJson from '../package.json'
 
 const loadEditor = (): Promise<typeof import('./components/Editor')> => import('./components/Editor')
@@ -98,6 +101,10 @@ interface DocumentInput {
   readOnly?: boolean
   sizeProfile?: DocumentSizeProfile
   handle?: FileSystemFileHandle
+  serverDoc?: {
+    rootId: string
+    relativePath: string
+  }
 }
 
 // `draftSavedRevision === null` means no draft snapshot exists on disk yet; that is only
@@ -227,7 +234,7 @@ export function App(): JSX.Element {
     document.documentElement.dir = settings.language === 'ar' ? 'rtl' : 'ltr'
   }, [settings.language])
 
-  const { dialogOpen, setDialogOpen, exportDialogFormat, setExportDialogFormat, settingsOpen, setSettingsOpen, aboutOpen, setAboutOpen, outlineVisible, setOutlineVisible, searchFocusRequest, setSearchFocusRequest, replaceFocusRequest, setReplaceFocusRequest, topBarDismissRequest, setTopBarDismissRequest } = usePanelState()
+  const { dialogOpen, setDialogOpen, exportDialogFormat, setExportDialogFormat, settingsOpen, setSettingsOpen, aboutOpen, setAboutOpen, serverDocOpen, setServerDocOpen, outlineVisible, setOutlineVisible, searchFocusRequest, setSearchFocusRequest, replaceFocusRequest, setReplaceFocusRequest, topBarDismissRequest, setTopBarDismissRequest } = usePanelState()
   const dialogResolver = useRef<((c: ConfirmChoice) => void) | null>(null)
   const nextDocSeq = useRef(1)
   const nextUntitledSeq = useRef(1)
@@ -264,7 +271,7 @@ export function App(): JSX.Element {
   const previewSchedule = getPreviewSchedule(activeDoc?.stats.length ?? 0)
   const virtualizedPreview = activeDoc?.sizeProfile === 'very-large'
   const workspaceWidth = useElementWidth(mainRef)
-  const panelOpen = exportDialogFormat !== null || settingsOpen || aboutOpen
+  const panelOpen = exportDialogFormat !== null || settingsOpen || aboutOpen || serverDocOpen
   /** Two panes below this width leave neither of them readable. */
   const splitFits = workspaceWidth >= SPLIT_MIN_WIDTH_PX
   // The split pairs the live preview with the source editor, so it only exists while editing.
@@ -497,8 +504,9 @@ export function App(): JSX.Element {
           draftSavedRevision: item.draftSavedContent === undefined ? null : revision,
           readOnly: item.readOnly === true,
           sizeProfile: item.sizeProfile,
-          handle: item.handle
-         }
+          handle: item.handle,
+          serverDoc: item.serverDoc
+        }
          nextDocs.push(doc)
          addedDocs.push(doc)
          nextActiveId ??= doc.id
@@ -824,6 +832,37 @@ export function App(): JSX.Element {
         flash(t('notice.readOnlyGuide'), true)
         return false
       }
+      if (doc.serverDoc) {
+        const savedText = doc.id === stateRef.current.activeDocId
+          ? materializeEditorContent() ?? doc.content
+          : doc.content
+        const savedRevision = doc.revision
+        const res = await serverDocService.saveServerDocument(
+          doc.serverDoc.rootId,
+          doc.serverDoc.relativePath,
+          savedText
+        )
+        if (res.ok) {
+          const draftRemoved = await removeDocumentDraft(doc)
+          setDocuments((prev) =>
+            prev.map((item) =>
+              item.id === docId
+                ? {
+                    ...item,
+                    content: savedText,
+                    savedRevision,
+                    draftId: draftRemoved ? null : item.draftId,
+                    draftSavedRevision: draftRemoved ? null : item.draftSavedRevision
+                  }
+                : item
+            )
+          )
+          flash(t('notice.saveSuccess'))
+          return true
+        }
+        flash(t('notice.saveFailed', { error: res.error ?? '' }), true)
+        return false
+      }
       if (!doc.path) return saveDocumentAs(docId)
 
       const savedText = doc.id === stateRef.current.activeDocId
@@ -945,6 +984,7 @@ export function App(): JSX.Element {
       }
       setSettingsOpen(false)
       setAboutOpen(false)
+      setServerDocOpen(false)
       setExportDialogFormat(format)
     },
     [flash, t]
@@ -1527,14 +1567,54 @@ export function App(): JSX.Element {
   const openSettings = useCallback(() => {
     setExportDialogFormat(null)
     setAboutOpen(false)
+    setServerDocOpen(false)
     setSettingsOpen(true)
-  }, [])
+  }, [setAboutOpen, setExportDialogFormat, setServerDocOpen, setSettingsOpen])
 
   const openAbout = useCallback(() => {
     setExportDialogFormat(null)
     setSettingsOpen(false)
+    setServerDocOpen(false)
     setAboutOpen(true)
-  }, [])
+  }, [setAboutOpen, setExportDialogFormat, setServerDocOpen, setSettingsOpen])
+
+  const openServerDocuments = useCallback(() => {
+    setExportDialogFormat(null)
+    setSettingsOpen(false)
+    setAboutOpen(false)
+    setServerDocOpen(true)
+  }, [setAboutOpen, setExportDialogFormat, setServerDocOpen, setSettingsOpen])
+
+  const handleSelectServerDocument = useCallback(
+    async (item: ServerDocItem) => {
+      try {
+        const res = await serverDocService.readServerDocument(item.rootId, item.relativePath)
+        if (!res.ok || res.content === undefined) {
+          flash(t('notice.openFailed', { error: res.error ?? 'Could not read document from server' }), true)
+          return
+        }
+        materializeEditorContent()
+        addDocuments([
+          {
+            path: res.path ?? `${item.rootName}/${item.relativePath}`,
+            title: item.name,
+            content: res.content,
+            sizeProfile: computeSizeProfile(res.content.length),
+            readOnly: false,
+            serverDoc: {
+              rootId: item.rootId,
+              relativePath: item.relativePath
+            }
+          }
+        ], 'view')
+        rememberRecent([item.name])
+        setServerDocOpen(false)
+      } catch (err) {
+        flash(t('notice.openFailed', { error: (err as Error).message }), true)
+      }
+    },
+    [addDocuments, flash, materializeEditorContent, rememberRecent, setServerDocOpen, t]
+  )
 
   const toggleSettings = useCallback(() => {
     if (stateRef.current.settingsOpen) {
@@ -1587,6 +1667,10 @@ export function App(): JSX.Element {
 
   const closeActivePanel = useCallback((): boolean => {
     const s = stateRef.current
+    if (serverDocOpen) {
+      setServerDocOpen(false)
+      return true
+    }
     if (s.exportDialogOpen) {
       setExportDialogFormat(null)
       return true
@@ -1895,6 +1979,7 @@ export function App(): JSX.Element {
         onExport={openExportDialog}
         onOpenSettings={toggleSettings}
         onOpenAbout={toggleAbout}
+        onOpenServerDocuments={openServerDocuments}
         searchFocusRequest={searchFocusRequest}
         replaceFocusRequest={replaceFocusRequest}
         dismissRequest={topBarDismissRequest}
@@ -1946,6 +2031,7 @@ export function App(): JSX.Element {
             ) : !hasDoc ? (
               <Welcome
                 onOpen={() => void doOpen()}
+                onOpenServerDocuments={openServerDocuments}
                 onNew={doNew}
                 recentFiles={settings.recentFiles}
                 onOpenRecent={openRecent}
@@ -2028,6 +2114,12 @@ export function App(): JSX.Element {
       )}
       {notice && <div className={`notice ${notice.error ? 'notice--error' : ''}`}>{notice.text}</div>}
       {dialogOpen && <ConfirmDialog onChoice={onDialogChoice} />}
+      {serverDocOpen && (
+        <ServerDocumentsDialog
+          onClose={() => setServerDocOpen(false)}
+          onSelectDocument={handleSelectServerDocument}
+        />
+      )}
     </div>
   )
 }

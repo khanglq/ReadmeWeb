@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
+import { serverDocumentsPlugin } from './serverPlugin'
 
 function keepKatexWoff2(css: string): string {
   return css.replace(
@@ -91,7 +92,8 @@ export default defineConfig({
     texmathWithoutFallbackKatex(),
     katexWoff2Only(),
     interWoff2Only(),
-    katexEmbeddedFonts()
+    katexEmbeddedFonts(),
+    serverDocumentsPlugin()
   ],
   resolve: {
     alias: {

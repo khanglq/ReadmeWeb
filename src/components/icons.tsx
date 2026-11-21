@@ -48,6 +48,29 @@ export const IconTextSize = (p: IconProps): JSX.Element => (
   </svg>
 )
 
+export const IconServer = (p: IconProps): JSX.Element => (
+  <svg {...base} {...p}>
+    <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+    <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+    <line x1="6" y1="6" x2="6.01" y2="6" />
+    <line x1="6" y1="18" x2="6.01" y2="18" />
+  </svg>
+)
+
+export const IconFolder = (p: IconProps): JSX.Element => (
+  <svg {...base} {...p}>
+    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+  </svg>
+)
+
+export const IconFolderPlus = (p: IconProps): JSX.Element => (
+  <svg {...base} {...p}>
+    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+    <line x1="12" y1="11" x2="12" y2="17" />
+    <line x1="9" y1="14" x2="15" y2="14" />
+  </svg>
+)
+
 export const IconLayoutWidth = (p: IconProps): JSX.Element => (
   <svg {...base} {...p}>
     <path d="M4 5v14M20 5v14M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3" />

@@ -15,6 +15,7 @@
   },
   "toolbar": {
     "open": "Mở",
+    "serverDocuments": "Tài liệu máy chủ",
     "preview": "Xem trước",
     "editor": "Chỉnh sửa",
     "viewMode": "Chế độ xem",
@@ -105,6 +106,7 @@
     "tagline": "Trình đọc Markdown gọn nhẹ, tinh tế",
     "title": "Moji v{{version}}",
     "openButton": "Mở tệp",
+    "serverButton": "Tài liệu máy chủ",
     "newButton": "Tệp mới",
     "dropHint": "hoặc kéo thả tệp .md vào bất kỳ đâu trong cửa sổ này",
     "recent": {
