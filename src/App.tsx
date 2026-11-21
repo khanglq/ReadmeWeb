@@ -629,6 +629,28 @@ export function App(): JSX.Element {
               draftSavedContent: draft.content
             }))
           )
+        } else {
+          const guideFiles: Record<string, string> = {
+            'vi': 'markdown-guide.vi.md',
+            'en': 'markdown-guide.en.md',
+            'es': 'markdown-guide.es.md',
+            'fr': 'markdown-guide.fr.md',
+            'de': 'markdown-guide.de.md',
+            'ja': 'markdown-guide.ja.md',
+            'zh': 'markdown-guide.zh.md'
+          }
+          const guideFile = guideFiles[s.language] ?? 'markdown-guide.en.md'
+          void fileService.readSample(guideFile).then((res) => {
+            if (res.ok && res.content) {
+              addDocuments([{
+                path: null,
+                title: 'Welcome.md',
+                content: res.content.replace('<!-- MERMAID_EXAMPLES -->', getExtraMermaidGuideExamples(s.language)),
+                sizeProfile: 'normal',
+                readOnly: false
+              }], 'view')
+            }
+          })
         }
       })
       .catch((err: Error) => flash(t('notice.draftRestoreFailed', { error: friendlyErrorMessage(err.message, t) }), true))
