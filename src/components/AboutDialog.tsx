@@ -59,12 +59,12 @@ export function AboutDialog({ version, updateState, onClose, onCheckForUpdates }
           <div className="about-dialog__meta">
             <div className="about-dialog__row">
               <span className="about-dialog__label">{t('aboutDialog.authorLabel')}</span>
-              <span>Alex Ishida</span>
+              <span>khanglq</span>
             </div>
             <div className="about-dialog__row">
               <span className="about-dialog__label">{t('aboutDialog.emailLabel')}</span>
-              <a className="about-dialog__link" href="mailto:alexishida@gmail.com">
-                alexishida@gmail.com
+              <a className="about-dialog__link" href="mailto:khanglq@viecai.vn">
+                khanglq@viecai.vn
               </a>
             </div>
             <div className="about-dialog__row">
