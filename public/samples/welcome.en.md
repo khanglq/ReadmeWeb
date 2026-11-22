@@ -1,6 +1,6 @@
 # Comprehensive Markdown Guide
 
-Welcome to **ReadmeWeb** — clean, lightweight Markdown viewer and editor on the web, fast and secure.
+Welcome to **ReadmeWeb** — clean, lightweight, open-source Markdown viewer and editor on the web, fast and secure.
 
 ---
 
@@ -61,7 +61,166 @@ flowchart TD
     C --> F[Sync Live Split-View]
 ```
 
-<!-- MERMAID_EXAMPLES -->
+
+### More Mermaid examples
+
+The installed Mermaid version also supports these diagram types.
+
+**Gantt chart**
+
+~~~mermaid
+gantt
+  title Project plan
+  dateFormat YYYY-MM-DD
+  section Build
+  Design :done, design, 2026-01-01, 2d
+  Implement :active, implement, after design, 3d
+~~~
+
+**Class diagram**
+
+~~~mermaid
+classDiagram
+  User --> Order
+  class User {
+    +String name
+  }
+  class Order {
+    +submit()
+  }
+~~~
+
+**State diagram**
+
+~~~mermaid
+stateDiagram-v2
+  [*] --> Draft
+  Draft --> Published
+  Published --> [*]
+~~~
+
+**Entity relationship diagram**
+
+~~~mermaid
+erDiagram
+  CUSTOMER ||--o{ ORDER : places
+  CUSTOMER {
+    string name
+  }
+  ORDER {
+    int id
+  }
+~~~
+
+**User journey**
+
+~~~mermaid
+journey
+  title Checkout
+  section Buy
+    Choose product: 5: Customer
+    Pay: 3: Customer
+~~~
+
+**Git graph**
+
+~~~mermaid
+gitGraph
+  commit id: "Initial"
+  branch feature
+  checkout feature
+  commit id: "Feature"
+  checkout main
+  merge feature
+~~~
+
+**Mind map**
+
+~~~mermaid
+mindmap
+  root((Project))
+    Plan
+    Build
+    Release
+~~~
+
+**Timeline**
+
+~~~mermaid
+timeline
+  title Product history
+  2024 : Planning : Prototype
+  2025 : Launch
+~~~
+
+**Quadrant chart**
+
+~~~mermaid
+quadrantChart
+  title Priority
+  x-axis Low impact --> High impact
+  y-axis Low effort --> High effort
+  quadrant-1 Plan
+  quadrant-2 Avoid
+  quadrant-3 Delegate
+  quadrant-4 Do now
+  Feature A: [0.8, 0.3]
+~~~
+
+**Sankey diagram**
+
+~~~mermaid
+sankey-beta
+  Visitors,Trial,100
+  Trial,Subscribers,35
+  Trial,Churned,65
+~~~
+
+**XY chart**
+
+~~~mermaid
+xychart-beta
+  x-axis [Jan, Feb, Mar]
+  y-axis "Sales" 0 --> 100
+  bar [30, 55, 80]
+  line [25, 45, 70]
+~~~
+
+**Requirement diagram**
+
+~~~mermaid
+requirementDiagram
+  requirement login {
+    id: 1
+    text: User signs in
+    risk: medium
+    verifymethod: test
+  }
+  element app {
+    type: software
+  }
+  app - satisfies -> login
+~~~
+
+**Block diagram**
+
+~~~mermaid
+block-beta
+  columns 2
+  A["Client"] B["API"]
+  A --> B
+~~~
+
+**C4 context diagram**
+
+~~~mermaid
+C4Context
+  title System context
+  Person(user, "User")
+  System(app, "Application")
+  Rel(user, app, "Uses")
+~~~
+
 
 ---
 
@@ -77,3 +236,25 @@ flowchart TD
 
 > [!TIP]
 > Press **`Ctrl+\`** on your keyboard to toggle **Live Split-View** (side-by-side editing: type on the left, see live render on the right)!
+
+---
+
+## 6. GitHub Repository & Open Source
+
+ReadmeWeb is open-source! You can explore the source code, contribute, report issues, or star the project on GitHub:
+
+🔗 **GitHub Repository:** [https://github.com/khanglq/ReadmeWeb](https://github.com/khanglq/ReadmeWeb)
+
+```bash
+# Clone the repository
+git clone https://github.com/khanglq/ReadmeWeb.git
+
+# Navigate into project directory
+cd ReadmeWeb
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```

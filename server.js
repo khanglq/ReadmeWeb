@@ -44,12 +44,25 @@ function loadConfig() {
     if (fs.existsSync(CONFIG_FILE)) {
       const raw = fs.readFileSync(CONFIG_FILE, 'utf-8')
       const data = JSON.parse(raw)
-      if (Array.isArray(data.serverFolders)) return data
+      if (Array.isArray(data.serverFolders) && data.serverFolders.length > 0) return data
     }
   } catch (err) {
     console.error('Failed to read config file:', err)
   }
-  return { serverFolders: [] }
+  return {
+    serverFolders: [
+      {
+        id: 'chessvn-docs',
+        name: 'All Chessvn docs',
+        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+      },
+      {
+        id: 'chessvn-coding-docs',
+        name: 'All Chessvn Coding docs',
+        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+      }
+    ]
+  }
 }
 
 function saveConfig(config) {
@@ -93,40 +106,56 @@ function parseJsonBody(req) {
   })
 }
 
-function scanMarkdownFiles(dir, baseDir, rootId, rootName, results, maxDepth = 10, currentDepth = 0) {
-  if (currentDepth > maxDepth || !fs.existsSync(dir)) return
-  const IGNORED = new Set(['node_modules', '.git', 'dist', '.tmp', 'out', 'release', '.system_generated'])
+function scanMarkdownFiles(dir, baseDir, rootId, rootName, results, maxDepth = 15, currentDepth = 0) {
+  if (currentDepth > maxDepth) return
+  const IGNORED = new Set([
+    'node_modules', '.git', 'dist', '.tmp', 'out', 'release',
+    '.system_generated', 'target', 'build', 'vendor', '.cache'
+  ])
 
+  let entries = []
   try {
-    const entries = fs.readdirSync(dir, { withFileTypes: true })
-    for (const entry of entries) {
-      const fullPath = path.join(dir, entry.name)
-      if (entry.isDirectory()) {
-        if (!IGNORED.has(entry.name)) {
-          scanMarkdownFiles(fullPath, baseDir, rootId, rootName, results, maxDepth, currentDepth + 1)
-        }
-      } else if (entry.isFile()) {
-        const lower = entry.name.toLowerCase()
-        if (lower.endsWith('.md') || lower.endsWith('.markdown')) {
-          try {
-            const stat = fs.statSync(fullPath)
-            const rel = path.relative(baseDir, fullPath).replace(/\\/g, '/')
-            results.push({
-              rootId,
-              rootName,
-              relativePath: rel,
-              name: entry.name,
-              sizeBytes: stat.size,
-              lastModified: stat.mtimeMs
-            })
-          } catch {
-            // Ignore unreadable file
-          }
+    if (!fs.existsSync(dir)) return
+    entries = fs.readdirSync(dir)
+  } catch {
+    return
+  }
+
+  const normalizedBase = path.resolve(baseDir).replace(/\\/g, '/')
+
+  for (const entryName of entries) {
+    if (entryName.startsWith('.') && entryName !== '.github') continue
+    if (IGNORED.has(entryName)) continue
+
+    const fullPath = path.join(dir, entryName)
+
+    try {
+      const stat = fs.statSync(fullPath)
+      if (stat.isDirectory()) {
+        scanMarkdownFiles(fullPath, baseDir, rootId, rootName, results, maxDepth, currentDepth + 1)
+      } else if (stat.isFile()) {
+        const lower = entryName.toLowerCase()
+        if (
+          lower.endsWith('.md') ||
+          lower.endsWith('.markdown') ||
+          lower.endsWith('.mdown') ||
+          lower.endsWith('.mkd') ||
+          lower.endsWith('.mdx')
+        ) {
+          const rel = path.relative(normalizedBase, path.resolve(fullPath)).replace(/\\/g, '/')
+          results.push({
+            rootId,
+            rootName,
+            relativePath: rel,
+            name: entryName,
+            sizeBytes: stat.size,
+            lastModified: stat.mtimeMs
+          })
         }
       }
+    } catch {
+      // Skip individually unreadable file or broken symlink
     }
-  } catch {
-    // Ignore unreadable directory
   }
 }
 
@@ -159,22 +188,29 @@ const server = http.createServer(async (req, res) => {
     if (route === 'server-folders' && req.method === 'POST') {
       const body = await parseJsonBody(req)
       const name = String(body.name || '').trim()
-      let folderPath = String(body.path || '').trim()
+      let folderPath = String(body.path || '').trim().replace(/[/\\]+$/, '')
 
       if (!name || !folderPath) {
         return jsonResponse(res, 400, { ok: false, error: 'Folder label and absolute path are required' })
       }
 
-      try {
-        if (!fs.existsSync(folderPath)) {
+      if (!fs.existsSync(folderPath)) {
+        try {
           fs.mkdirSync(folderPath, { recursive: true })
+        } catch {
+          // Might not have permission to mkdir in root/mount, check below
         }
-        const resolved = path.resolve(folderPath)
-        const stat = fs.statSync(resolved)
+      }
+
+      if (!fs.existsSync(folderPath)) {
+        return jsonResponse(res, 400, { ok: false, error: `Directory does not exist on server: ${folderPath}` })
+      }
+
+      try {
+        const stat = fs.statSync(folderPath)
         if (!stat.isDirectory()) {
           return jsonResponse(res, 400, { ok: false, error: 'Path is not a valid directory' })
         }
-        folderPath = resolved
       } catch (err) {
         return jsonResponse(res, 400, { ok: false, error: `Directory invalid: ${err.message}` })
       }
@@ -212,8 +248,9 @@ const server = http.createServer(async (req, res) => {
       const documents = []
 
       for (const folder of targetFolders) {
-        if (fs.existsSync(folder.path)) {
-          scanMarkdownFiles(folder.path, folder.path, folder.id, folder.name, documents)
+        const cleanPath = String(folder.path || '').trim().replace(/[/\\]+$/, '')
+        if (cleanPath && fs.existsSync(cleanPath)) {
+          scanMarkdownFiles(cleanPath, cleanPath, folder.id, folder.name, documents)
         }
       }
 

@@ -289,6 +289,8 @@
     "collapse": "Collapse",
     "docCount": "{{count}} docs",
     "emptyFolder": "Empty folder",
+    "emptyFolderTip": "No markdown files found in this folder",
+    "noFilesInFolder": "No markdown files (.md, .markdown) found in this folder.",
     "otherFolders": "Other Documents",
     "loading": "Loading documents from server..."
   }

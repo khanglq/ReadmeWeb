@@ -204,20 +204,26 @@ function ServerDocTreeNode({
           </span>
         </div>
 
-        {!isCollapsed && node.children.length > 0 && (
+        {!isCollapsed && (
           <div className="server-dialog__tree-children">
-            {node.children.map((child) => (
-              <ServerDocTreeNode
-                key={child.id}
-                node={child}
-                depth={depth + 1}
-                collapsedFolderIds={collapsedFolderIds}
-                onToggleFolder={onToggleFolder}
-                onSelectDocument={onSelectDocument}
-                isSearching={isSearching}
-                showRootName={showRootName}
-              />
-            ))}
+            {node.children.length > 0 ? (
+              node.children.map((child) => (
+                <ServerDocTreeNode
+                  key={child.id}
+                  node={child}
+                  depth={depth + 1}
+                  collapsedFolderIds={collapsedFolderIds}
+                  onToggleFolder={onToggleFolder}
+                  onSelectDocument={onSelectDocument}
+                  isSearching={isSearching}
+                  showRootName={showRootName}
+                />
+              ))
+            ) : (
+              <div className="server-dialog__tree-empty">
+                {t('server.emptyFolderTip', 'No markdown files in this folder')}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -417,6 +423,10 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
     const res = await serverDocService.addServerFolder(newFolderName.trim(), newFolderPath.trim())
     if (res.ok && res.folders) {
       setFolders(res.folders)
+      const addedId = res.folder?.id
+      if (addedId) {
+        setSelectedRootId(addedId)
+      }
       setNewFolderName('')
       setNewFolderPath('')
       setShowAddFolder(false)
@@ -614,6 +624,8 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
               <div className="server-dialog__empty-subtitle">
                 {searchQuery
                   ? t('server.noMatch', 'No files match your search query.')
+                  : selectedRootId !== 'all'
+                  ? t('server.noFilesInFolder', 'No markdown files (.md, .markdown) found in this folder.')
                   : t('server.noFilesTip', 'Configure a root folder containing .md files using the button above.')}
               </div>
             </div>

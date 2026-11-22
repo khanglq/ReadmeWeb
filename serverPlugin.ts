@@ -23,12 +23,26 @@ const CONFIG_PATH = resolve(__dirname, 'readmeweb.config.json')
 function loadConfig(): { serverFolders: ServerFolder[] } {
   try {
     if (existsSync(CONFIG_PATH)) {
-      return JSON.parse(readFileSync(CONFIG_PATH, 'utf8'))
+      const data = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'))
+      if (Array.isArray(data.serverFolders) && data.serverFolders.length > 0) return data
     }
   } catch (err) {
     console.error('[serverDocumentsPlugin] Failed to read config:', err)
   }
-  return { serverFolders: [] }
+  return {
+    serverFolders: [
+      {
+        id: 'chessvn-docs',
+        name: 'All Chessvn docs',
+        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+      },
+      {
+        id: 'chessvn-coding-docs',
+        name: 'All Chessvn Coding docs',
+        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+      }
+    ]
+  }
 }
 
 function saveConfig(config: { serverFolders: ServerFolder[] }): void {
@@ -39,40 +53,56 @@ function saveConfig(config: { serverFolders: ServerFolder[] }): void {
   }
 }
 
-const IGNORED_DIRS = new Set(['node_modules', '.git', 'dist', '.tmp', 'out', 'release', '.system_generated'])
+const IGNORED_DIRS = new Set([
+  'node_modules', '.git', 'dist', '.tmp', 'out', 'release',
+  '.system_generated', 'target', 'build', 'vendor', '.cache'
+])
 
-function scanMarkdownFiles(dir: string, baseDir: string, rootId: string, rootName: string, items: ServerDocItem[] = []): ServerDocItem[] {
-  if (!existsSync(dir)) return items
+function scanMarkdownFiles(dir: string, baseDir: string, rootId: string, rootName: string, items: ServerDocItem[] = [], maxDepth = 15, currentDepth = 0): ServerDocItem[] {
+  if (currentDepth > maxDepth || !existsSync(dir)) return items
 
+  let entries: string[] = []
   try {
-    const entries = readdirSync(dir, { withFileTypes: true })
-    for (const entry of entries) {
-      if (entry.isDirectory()) {
-        if (IGNORED_DIRS.has(entry.name)) continue
-        scanMarkdownFiles(join(dir, entry.name), baseDir, rootId, rootName, items)
-      } else if (entry.isFile()) {
-        const lower = entry.name.toLowerCase()
-        if (lower.endsWith('.md') || lower.endsWith('.markdown')) {
-          try {
-            const fullPath = join(dir, entry.name)
-            const stat = statSync(fullPath)
-            const rel = relative(baseDir, fullPath).replace(/\\/g, '/')
-            items.push({
-              rootId,
-              rootName,
-              relativePath: rel,
-              name: entry.name,
-              sizeBytes: stat.size,
-              lastModified: stat.mtimeMs
-            })
-          } catch {
-            // Ignore unreadable files
-          }
+    entries = readdirSync(dir)
+  } catch {
+    return items
+  }
+
+  const normalizedBase = resolve(baseDir).replace(/\\/g, '/')
+
+  for (const entryName of entries) {
+    if (entryName.startsWith('.') && entryName !== '.github') continue
+    if (IGNORED_DIRS.has(entryName)) continue
+
+    const fullPath = join(dir, entryName)
+
+    try {
+      const stat = statSync(fullPath)
+      if (stat.isDirectory()) {
+        scanMarkdownFiles(fullPath, baseDir, rootId, rootName, items, maxDepth, currentDepth + 1)
+      } else if (stat.isFile()) {
+        const lower = entryName.toLowerCase()
+        if (
+          lower.endsWith('.md') ||
+          lower.endsWith('.markdown') ||
+          lower.endsWith('.mdown') ||
+          lower.endsWith('.mkd') ||
+          lower.endsWith('.mdx')
+        ) {
+          const rel = relative(normalizedBase, resolve(fullPath)).replace(/\\/g, '/')
+          items.push({
+            rootId,
+            rootName,
+            relativePath: rel,
+            name: entryName,
+            sizeBytes: stat.size,
+            lastModified: stat.mtimeMs
+          })
         }
       }
+    } catch {
+      // Ignore unreadable files or broken symlinks
     }
-  } catch {
-    // Ignore unreadable dirs
   }
 
   return items
@@ -166,7 +196,10 @@ export function serverDocumentsPlugin(): Plugin {
 
           const documents: ServerDocItem[] = []
           for (const folder of folders) {
-            scanMarkdownFiles(folder.path, folder.path, folder.id, folder.name, documents)
+            const cleanPath = (folder.path || '').trim().replace(/[/\\]+$/, '')
+            if (cleanPath && existsSync(cleanPath)) {
+              scanMarkdownFiles(cleanPath, cleanPath, folder.id, folder.name, documents)
+            }
           }
 
           return sendJson(res, { ok: true, documents, folders: config.serverFolders })

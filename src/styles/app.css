@@ -2493,6 +2493,13 @@ body {
   border-left: 1px solid var(--border, #3a3a3a);
 }
 
+.server-dialog__tree-empty {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-muted, #9aa0a6);
+  font-style: italic;
+}
+
 .server-dialog__tree-spacer {
   display: inline-block;
   width: 20px;

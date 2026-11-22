@@ -289,6 +289,8 @@
     "collapse": "Thu gọn",
     "docCount": "{{count}} tài liệu",
     "emptyFolder": "Thư mục trống",
+    "emptyFolderTip": "Thư mục không có tệp markdown nào",
+    "noFilesInFolder": "Không tìm thấy tệp markdown (.md, .markdown) nào trong thư mục này.",
     "otherFolders": "Tài liệu khác",
     "loading": "Đang tải tài liệu từ máy chủ..."
   }

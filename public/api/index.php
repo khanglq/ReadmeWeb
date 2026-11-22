@@ -38,20 +38,25 @@ function loadConfig($file, $webRoot = '') {
         $raw = @file_get_contents($file);
         if ($raw !== false) {
             $data = json_decode($raw, true);
-            if (is_array($data) && isset($data['serverFolders']) && is_array($data['serverFolders'])) {
+            if (is_array($data) && isset($data['serverFolders']) && is_array($data['serverFolders']) && count($data['serverFolders']) > 0) {
                 return $data;
             }
         }
     }
-    $defaultFolders = [];
-    if (!empty($webRoot) && is_dir($webRoot . '/docs')) {
-        $defaultFolders[] = [
-            'id' => 'folder-docs',
-            'name' => 'All docs of server',
-            'path' => 'docs'
-        ];
-    }
-    return ['serverFolders' => $defaultFolders];
+    return [
+        'serverFolders' => [
+            [
+                'id' => 'chessvn-docs',
+                'name' => 'All Chessvn docs',
+                'path' => '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+            ],
+            [
+                'id' => 'chessvn-coding-docs',
+                'name' => 'All Chessvn Coding docs',
+                'path' => '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+            ]
+        ]
+    ];
 }
 
 function saveConfig(&$file, $config) {
@@ -107,14 +112,14 @@ $ignoredDirs = [
     '.system_generated' => true
 ];
 
-function scanMarkdownFiles($dir, $baseDir, $rootId, $rootName, &$results, $ignoredDirs, $maxDepth = 10, $currentDepth = 0) {
+function scanMarkdownFiles($dir, $baseDir, $rootId, $rootName, &$results, $ignoredDirs, $maxDepth = 15, $currentDepth = 0) {
     if ($currentDepth > $maxDepth || !is_dir($dir) || !is_readable($dir)) return;
 
     $items = @scandir($dir);
     if ($items === false) return;
 
     foreach ($items as $item) {
-        if ($item === '.' || $item === '..') continue;
+        if ($item === '.' || $item === '..' || str_starts_with($item, '.')) continue;
 
         $fullPath = $dir . '/' . $item;
 
@@ -123,7 +128,7 @@ function scanMarkdownFiles($dir, $baseDir, $rootId, $rootName, &$results, $ignor
             scanMarkdownFiles($fullPath, $baseDir, $rootId, $rootName, $results, $ignoredDirs, $maxDepth, $currentDepth + 1);
         } elseif (is_file($fullPath)) {
             $lower = strtolower($item);
-            if (str_ends_with($lower, '.md') || str_ends_with($lower, '.markdown')) {
+            if (str_ends_with($lower, '.md') || str_ends_with($lower, '.markdown') || str_ends_with($lower, '.mdown') || str_ends_with($lower, '.mkd') || str_ends_with($lower, '.mdx')) {
                 $stat = @stat($fullPath);
                 $rel = ltrim(str_replace('\\', '/', substr($fullPath, strlen($baseDir))), '/');
                 $results[] = [
