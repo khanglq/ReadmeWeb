@@ -1,0 +1,10 @@
+{
+  "name": "readmeweb",
+  "version": "1.0.2",
+  "description": "ReadmeWeb Standalone Production Server",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

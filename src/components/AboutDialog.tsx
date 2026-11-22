@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { UpdateState } from '../types/app'
 import { IconRefresh, IconX } from './icons'
-import logoMark from '../assets/logo-mark-light.png'
+import logoMark from '../assets/readmeweb-logo.png'
 
 const RELEASES_URL = 'https://github.com/khanglq/ReadmeWeb/releases'
 

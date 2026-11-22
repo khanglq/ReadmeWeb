@@ -265,5 +265,31 @@
     "replaceNone": "No matches found.",
     "replaceOneSuccess": "{{count}} match replaced.",
     "replaceAllSuccess": "{{count}} matches replaced."
+  },
+  "server": {
+    "title": "Server Documents",
+    "configureFolders": "Configure Server Folders",
+    "addRootFolder": "Add Root Folder on Server",
+    "folderNamePlaceholder": "Folder Label (e.g. Project Docs)",
+    "folderPathPlaceholder": "Absolute Path on Server (e.g. E:/Projects/Docs)",
+    "addFolderBtn": "Add Folder",
+    "searchPlaceholder": "Filter markdown files...",
+    "allFolders": "All Folders",
+    "confirmRemoveFolder": "Remove \"{{name}}\" from server folders?",
+    "noDocumentsFound": "No markdown files found",
+    "noMatch": "No files match your search query.",
+    "noFilesTip": "Configure a root folder containing .md files using the button above.",
+    "viewTree": "Folder Tree",
+    "viewFlat": "Flat List",
+    "tree": "Tree",
+    "list": "List",
+    "expandAll": "Expand all folders",
+    "collapseAll": "Collapse all folders",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "docCount": "{{count}} docs",
+    "emptyFolder": "Empty folder",
+    "otherFolders": "Other Documents",
+    "loading": "Loading documents from server..."
   }
 }

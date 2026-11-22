@@ -1447,6 +1447,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 14px;
 }
 
 .about-dialog__hero-content {
@@ -2250,8 +2251,8 @@ body {
 
 /* --- Server Documents Dialog ------------------------------------------- */
 .server-dialog {
-  width: min(820px, calc(100vw - 32px));
-  height: min(620px, calc(100vh - 32px));
+  width: min(840px, calc(100vw - 32px));
+  height: min(640px, calc(100vh - 32px));
   min-width: 0;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 32px);
@@ -2261,8 +2262,8 @@ body {
 
 .server-dialog__add-form {
   padding: 12px 16px;
-  background-color: var(--bg-surface, #27272a);
-  border-bottom: 1px solid var(--border-color, #3f3f46);
+  background-color: var(--modal-surface, #252526);
+  border-bottom: 1px solid var(--modal-border, #3a3a3a);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -2271,7 +2272,7 @@ body {
 .server-dialog__add-title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-primary, #f4f4f5);
+  color: var(--modal-text, #e7e7e7);
 }
 
 .server-dialog__add-fields {
@@ -2289,17 +2290,42 @@ body {
 }
 
 .server-dialog__filter-bar {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border-color, #3f3f46);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--modal-border, #3a3a3a);
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.server-dialog__search-row {
+  display: flex;
   align-items: center;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .server-dialog__search {
-  min-width: 200px;
+  min-width: 180px;
   flex: 1 1 200px;
+}
+
+.server-dialog__view-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.server-dialog__tree-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.server-dialog__btn-text {
+  font-size: 12px;
+  margin-left: 4px;
 }
 
 .server-dialog__tabs {
@@ -2325,9 +2351,10 @@ body {
 
 .server-dialog__error {
   padding: 8px 16px;
-  color: #f87171;
+  color: var(--danger, #ff6b6b);
   font-size: 12px;
-  background-color: rgba(239, 68, 68, 0.1);
+  background-color: rgba(255, 107, 107, 0.1);
+  border-bottom: 1px solid rgba(255, 107, 107, 0.2);
 }
 
 .server-dialog__body {
@@ -2340,16 +2367,140 @@ body {
 .server-dialog__empty {
   padding: 48px 16px;
   text-align: center;
-  color: var(--text-muted);
+  color: var(--text-muted, #9aa0a6);
 }
 
 .server-dialog__empty-title {
   font-size: 15px;
   margin-bottom: 8px;
+  color: var(--text, #e7e7e7);
+  font-weight: 500;
 }
 
 .server-dialog__empty-subtitle {
   font-size: 13px;
+  color: var(--text-muted, #9aa0a6);
+}
+
+/* Tree & List components */
+.server-dialog__tree {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.server-dialog__tree-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.server-dialog__tree-folder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm, 5px);
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text, #e7e7e7);
+  transition: background-color 0.15s ease;
+  min-height: 32px;
+  outline: none;
+}
+
+.server-dialog__tree-folder:hover,
+.server-dialog__tree-folder:focus-visible {
+  background-color: var(--nav-hover-bg, #2a2a2c);
+}
+
+.server-dialog__tree-folder--root {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--accent, #4c9aff);
+  background-color: rgba(76, 154, 255, 0.08);
+  border: 1px solid rgba(76, 154, 255, 0.18);
+  margin: 6px 0 2px 0;
+}
+
+.server-dialog__tree-folder--root:hover,
+.server-dialog__tree-folder--root:focus-visible {
+  background-color: rgba(76, 154, 255, 0.15);
+}
+
+.server-dialog__tree-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #9aa0a6);
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 3px;
+}
+
+.server-dialog__tree-toggle:hover {
+  color: var(--text, #e7e7e7);
+  background-color: var(--modal-inset, #2b2b2b);
+}
+
+.server-dialog__tree-toggle svg {
+  transition: transform 0.15s ease;
+}
+
+.server-dialog__tree-toggle--open svg {
+  transform: rotate(90deg);
+}
+
+.server-dialog__tree-folder-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent, #4c9aff);
+  flex-shrink: 0;
+}
+
+.server-dialog__tree-folder-name {
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.server-dialog__tree-badge {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted, #9aa0a6);
+  background-color: var(--modal-inset, #2b2b2b);
+  padding: 1px 7px;
+  border-radius: 10px;
+  border: 1px solid var(--border, #3a3a3a);
+}
+
+.server-dialog__tree-children {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 10px;
+  padding-left: 8px;
+  border-left: 1px solid var(--border, #3a3a3a);
+}
+
+.server-dialog__tree-spacer {
+  display: inline-block;
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.server-dialog__tree-file {
+  margin: 1px 0;
 }
 
 .server-dialog__list {
@@ -2362,30 +2513,40 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
-  border-radius: 6px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm, 5px);
   background-color: transparent;
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
   border: 1px solid transparent;
   gap: 12px;
+  outline: none;
 }
 
-.server-dialog__item:hover {
-  background-color: var(--bg-surface, #27272a);
-  border-color: var(--border-color, #3f3f46);
+.server-dialog__item:hover,
+.server-dialog__item:focus-visible {
+  background-color: var(--nav-hover-bg, #2a2a2c);
+  border-color: var(--border, #3a3a3a);
 }
 
 .server-dialog__item-main {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   min-width: 0;
 }
 
 .server-dialog__item-icon {
-  color: var(--accent-color, #38bdf8);
+  color: var(--text-muted, #9aa0a6);
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.server-dialog__item:hover .server-dialog__item-icon,
+.server-dialog__item:focus-visible .server-dialog__item-icon {
+  color: var(--accent, #4c9aff);
 }
 
 .server-dialog__item-text {
@@ -2394,33 +2555,33 @@ body {
 
 .server-dialog__item-name {
   font-weight: 500;
-  font-size: 14px;
-  color: var(--text-primary, #f4f4f5);
+  font-size: 13.5px;
+  color: var(--text, #e7e7e7);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .server-dialog__item-path {
-  font-size: 12px;
-  color: var(--text-muted, #a1a1aa);
+  font-size: 11px;
+  color: var(--text-muted, #9aa0a6);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .server-dialog__item-root {
-  color: var(--accent-color, #38bdf8);
-  opacity: 0.8;
+  color: var(--accent, #4c9aff);
+  opacity: 0.85;
 }
 
 .server-dialog__item-meta {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: center;
   flex-shrink: 0;
-  font-size: 12px;
-  color: var(--text-muted, #a1a1aa);
+  font-size: 11.5px;
+  color: var(--text-muted, #9aa0a6);
 }
 
 /* --- Comprehensive Responsive System ------------------------------------ */
@@ -2613,10 +2774,14 @@ body {
   }
 
   .server-dialog__filter-bar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .server-dialog__search-row {
     flex-direction: column;
     align-items: stretch;
     gap: 8px;
-    padding: 8px 12px;
   }
 
   .server-dialog__search {
@@ -2624,8 +2789,19 @@ body {
     min-width: 0;
   }
 
+  .server-dialog__view-controls {
+    margin-left: 0;
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .server-dialog__tabs {
     padding-bottom: 4px;
+  }
+
+  .server-dialog__tree-children {
+    margin-left: 6px;
+    padding-left: 6px;
   }
 
   .server-dialog__item {
@@ -2639,6 +2815,7 @@ body {
     font-size: 11px;
     opacity: 0.75;
     gap: 10px;
+    padding-left: 28px;
   }
 
   .diagram-modal-backdrop {

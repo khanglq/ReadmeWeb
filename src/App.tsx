@@ -638,17 +638,12 @@ export function App(): JSX.Element {
             }))
           )
         } else {
-          const guideFiles: Record<string, string> = {
-            'vi': 'markdown-guide.vi.md',
-            'en': 'markdown-guide.en.md',
-            'es': 'markdown-guide.es.md',
-            'fr': 'markdown-guide.fr.md',
-            'de': 'markdown-guide.de.md',
-            'ja': 'markdown-guide.ja.md',
-            'zh': 'markdown-guide.zh.md'
+          const welcomeFiles: Record<string, string> = {
+            'vi': 'welcome.vi.md',
+            'en': 'welcome.en.md'
           }
-          const guideFile = guideFiles[s.language] ?? 'markdown-guide.en.md'
-          void fileService.readSample(guideFile).then((res) => {
+          const welcomeFile = welcomeFiles[s.language] ?? 'welcome.en.md'
+          void fileService.readSample(welcomeFile).then((res) => {
             if (res.ok && res.content) {
               addDocuments([{
                 path: null,

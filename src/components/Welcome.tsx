@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { IconFilePlus, IconFileText, IconOpen, IconServer, IconX } from './icons'
-import logoMark from '../assets/logo-mark-light.png'
+import logoMark from '../assets/readmeweb-logo.png'
 
 interface WelcomeProps {
   onOpen: () => void

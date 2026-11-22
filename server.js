@@ -17,8 +17,10 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const PORT = parseInt(process.env.PORT || process.argv[2] || '3000', 10)
-const DIST_DIR = path.resolve(__dirname, 'dist')
-const CONFIG_FILE = path.resolve(__dirname, 'readmeweb.config.json')
+const DIST_DIR = fs.existsSync(path.resolve(__dirname, 'dist')) ? path.resolve(__dirname, 'dist') : __dirname
+const CONFIG_FILE = fs.existsSync(path.resolve(__dirname, 'readmeweb.config.json'))
+  ? path.resolve(__dirname, 'readmeweb.config.json')
+  : path.resolve(__dirname, '..', 'readmeweb.config.json')
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=utf-8',

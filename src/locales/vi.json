@@ -265,5 +265,31 @@
     "replaceNone": "Không tìm thấy kết quả phù hợp nào.",
     "replaceOneSuccess": "Đã thay thế {{count}} kết quả.",
     "replaceAllSuccess": "Đã thay thế {{count}} kết quả."
+  },
+  "server": {
+    "title": "Tài liệu máy chủ",
+    "configureFolders": "Cấu hình thư mục máy chủ",
+    "addRootFolder": "Thêm thư mục gốc trên máy chủ",
+    "folderNamePlaceholder": "Tên nhãn thư mục (VD: Tài liệu dự án)",
+    "folderPathPlaceholder": "Đường dẫn tuyệt đối trên máy chủ (VD: E:/Projects/Docs)",
+    "addFolderBtn": "Thêm thư mục",
+    "searchPlaceholder": "Lọc tệp markdown...",
+    "allFolders": "Tất cả thư mục",
+    "confirmRemoveFolder": "Xóa thư mục \"{{name}}\" khỏi danh sách máy chủ?",
+    "noDocumentsFound": "Không tìm thấy tệp markdown nào",
+    "noMatch": "Không có tệp nào khớp với từ khóa tìm kiếm.",
+    "noFilesTip": "Cấu hình một thư mục chứa tệp .md bằng nút phía trên.",
+    "viewTree": "Cây thư mục",
+    "viewFlat": "Danh sách phẳng",
+    "tree": "Cây",
+    "list": "Danh sách",
+    "expandAll": "Mở rộng tất cả",
+    "collapseAll": "Thu gọn tất cả",
+    "expand": "Mở rộng",
+    "collapse": "Thu gọn",
+    "docCount": "{{count}} tài liệu",
+    "emptyFolder": "Thư mục trống",
+    "otherFolders": "Tài liệu khác",
+    "loading": "Đang tải tài liệu từ máy chủ..."
   }
 }
