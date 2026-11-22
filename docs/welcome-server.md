@@ -1,6 +1,6 @@
 # Chào mừng đến với ReadmeWeb trên Server
 
-Tài liệu này được lưu trực tiếp trên máy chủ web của bạn (**Hostinger**)!
+Tài liệu này được lưu trực tiếp trên máy chủ web của bạn!
 
 ---
 

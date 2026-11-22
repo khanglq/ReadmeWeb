@@ -5,5 +5,5 @@ dist
 .DS_Store
 Thumbs.db
 .hostinger
-readmeweb.config.json
+readmeweb.config*
 .gitignore
