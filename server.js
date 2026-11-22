@@ -39,12 +39,37 @@ const MIME_TYPES = {
   '.ttf': 'font/ttf'
 }
 
+function deduplicateFolders(folders) {
+  const seenPaths = new Set()
+  const unique = []
+  for (const f of folders) {
+    if (!f.path) continue
+    const resolved = path.resolve(f.path).replace(/\\/g, '/').toLowerCase()
+    let isDuplicateOrSub = seenPaths.has(resolved)
+    if (!isDuplicateOrSub) {
+      for (const seen of seenPaths) {
+        if (resolved.startsWith(seen + '/')) {
+          isDuplicateOrSub = true
+          break
+        }
+      }
+    }
+    if (!isDuplicateOrSub) {
+      seenPaths.add(resolved)
+      unique.push(f)
+    }
+  }
+  return unique
+}
+
 function loadConfig() {
   try {
     if (fs.existsSync(CONFIG_FILE)) {
       const raw = fs.readFileSync(CONFIG_FILE, 'utf-8')
       const data = JSON.parse(raw)
-      if (Array.isArray(data.serverFolders) && data.serverFolders.length > 0) return data
+      if (Array.isArray(data.serverFolders) && data.serverFolders.length > 0) {
+        return { serverFolders: deduplicateFolders(data.serverFolders) }
+      }
     }
   } catch (err) {
     console.error('Failed to read config file:', err)
@@ -52,14 +77,9 @@ function loadConfig() {
   return {
     serverFolders: [
       {
-        id: 'chessvn-docs',
-        name: 'All Chessvn docs',
-        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
-      },
-      {
-        id: 'chessvn-coding-docs',
-        name: 'All Chessvn Coding docs',
-        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+        id: 'folder-docs',
+        name: 'All docs of server',
+        path: 'docs'
       }
     ]
   }
@@ -216,6 +236,51 @@ const server = http.createServer(async (req, res) => {
       }
 
       const config = loadConfig()
+
+      // Prevent duplicate folder label or duplicate resolved path
+      const duplicateName = config.serverFolders.find(
+        (f) => f.name.trim().toLowerCase() === name.toLowerCase()
+      )
+      if (duplicateName) {
+        return jsonResponse(res, 400, { ok: false, error: `A folder with label "${name}" already exists` })
+      }
+
+      const resolvedNew = path.resolve(folderPath).replace(/\\/g, '/').toLowerCase()
+      const duplicatePath = config.serverFolders.find((f) => {
+        const existingResolved = path.resolve(f.path).replace(/\\/g, '/').toLowerCase()
+        return existingResolved === resolvedNew
+      })
+      if (duplicatePath) {
+        return jsonResponse(res, 400, {
+          ok: false,
+          error: `This folder path is already configured as "${duplicatePath.name}"`
+        })
+      }
+
+      // Check if folder is subfolder of existing root folder
+      const subfolder = config.serverFolders.find((f) => {
+        const existingResolved = path.resolve(f.path).replace(/\\/g, '/').toLowerCase()
+        return resolvedNew.startsWith(existingResolved + '/')
+      })
+      if (subfolder) {
+        return jsonResponse(res, 400, {
+          ok: false,
+          error: `This folder is a subfolder of "${subfolder.name}", which is already configured.`
+        })
+      }
+
+      // Check if folder is parent of existing root folder
+      const parentFolder = config.serverFolders.find((f) => {
+        const existingResolved = path.resolve(f.path).replace(/\\/g, '/').toLowerCase()
+        return existingResolved.startsWith(resolvedNew + '/')
+      })
+      if (parentFolder) {
+        return jsonResponse(res, 400, {
+          ok: false,
+          error: `This folder contains "${parentFolder.name}", which is already configured as a root folder.`
+        })
+      }
+
       const newFolder = {
         id: `folder-${Date.now()}-${Math.floor(Math.random() * 900 + 100)}`,
         name,

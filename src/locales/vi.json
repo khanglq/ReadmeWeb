@@ -292,6 +292,10 @@
     "emptyFolderTip": "Thư mục không có tệp markdown nào",
     "noFilesInFolder": "Không tìm thấy tệp markdown (.md, .markdown) nào trong thư mục này.",
     "otherFolders": "Tài liệu khác",
-    "loading": "Đang tải tài liệu từ máy chủ..."
+    "loading": "Đang tải tài liệu từ máy chủ...",
+    "duplicateName": "Đã tồn tại thư mục có nhãn \"{{name}}\".",
+    "duplicatePath": "Đường dẫn thư mục này đã được cấu hình dưới tên \"{{existing}}\".",
+    "isSubfolder": "Thư mục này là thư mục con của \"{{existing}}\" (đã được cấu hình trước đó).",
+    "isParentFolder": "Thư mục này bao chứa thư mục \"{{existing}}\" (đã được cấu hình trước đó)."
   }
 }

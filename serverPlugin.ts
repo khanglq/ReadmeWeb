@@ -20,11 +20,36 @@ export interface ServerDocItem {
 
 const CONFIG_PATH = resolve(__dirname, 'readmeweb.config.json')
 
+function deduplicateFolders(folders: ServerFolder[]): ServerFolder[] {
+  const seenPaths = new Set<string>()
+  const unique: ServerFolder[] = []
+  for (const f of folders) {
+    if (!f.path) continue
+    const resolved = resolve(f.path).replace(/\\/g, '/').toLowerCase()
+    let isDuplicateOrSub = seenPaths.has(resolved)
+    if (!isDuplicateOrSub) {
+      for (const seen of seenPaths) {
+        if (resolved.startsWith(seen + '/')) {
+          isDuplicateOrSub = true
+          break
+        }
+      }
+    }
+    if (!isDuplicateOrSub) {
+      seenPaths.add(resolved)
+      unique.push(f)
+    }
+  }
+  return unique
+}
+
 function loadConfig(): { serverFolders: ServerFolder[] } {
   try {
     if (existsSync(CONFIG_PATH)) {
       const data = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'))
-      if (Array.isArray(data.serverFolders) && data.serverFolders.length > 0) return data
+      if (Array.isArray(data.serverFolders) && data.serverFolders.length > 0) {
+        return { serverFolders: deduplicateFolders(data.serverFolders) }
+      }
     }
   } catch (err) {
     console.error('[serverDocumentsPlugin] Failed to read config:', err)
@@ -32,14 +57,9 @@ function loadConfig(): { serverFolders: ServerFolder[] } {
   return {
     serverFolders: [
       {
-        id: 'chessvn-docs',
-        name: 'All Chessvn docs',
-        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
-      },
-      {
-        id: 'chessvn-coding-docs',
-        name: 'All Chessvn Coding docs',
-        path: '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+        id: 'folder-docs',
+        name: 'All docs of server',
+        path: 'docs'
       }
     ]
   }
@@ -160,6 +180,53 @@ export function serverDocumentsPlugin(): Plugin {
             }
 
             const config = loadConfig()
+
+            // Prevent duplicate name or path
+            const duplicateName = config.serverFolders.find(
+              (f) => f.name.trim().toLowerCase() === name.toLowerCase()
+            )
+            if (duplicateName) {
+              return sendJson(res, { ok: false, error: `A folder with label "${name}" already exists` }, 400)
+            }
+
+            const duplicatePath = config.serverFolders.find((f) => {
+              const existingResolved = resolve(f.path).replace(/\\/g, '/').toLowerCase()
+              return existingResolved === folderPath.toLowerCase()
+            })
+            if (duplicatePath) {
+              return sendJson(
+                res,
+                { ok: false, error: `This folder path is already configured as "${duplicatePath.name}"` },
+                400
+              )
+            }
+
+            // Check if folder is subfolder of existing root folder
+            const subfolder = config.serverFolders.find((f) => {
+              const existingResolved = resolve(f.path).replace(/\\/g, '/').toLowerCase()
+              return folderPath.toLowerCase().startsWith(existingResolved + '/')
+            })
+            if (subfolder) {
+              return sendJson(
+                res,
+                { ok: false, error: `This folder is a subfolder of "${subfolder.name}", which is already configured.` },
+                400
+              )
+            }
+
+            // Check if folder is parent of existing root folder
+            const parentFolder = config.serverFolders.find((f) => {
+              const existingResolved = resolve(f.path).replace(/\\/g, '/').toLowerCase()
+              return existingResolved.startsWith(folderPath.toLowerCase() + '/')
+            })
+            if (parentFolder) {
+              return sendJson(
+                res,
+                { ok: false, error: `This folder contains "${parentFolder.name}", which is already configured as a root folder.` },
+                400
+              )
+            }
+
             const id = `folder-${Date.now()}`
             config.serverFolders.push({ id, name, path: folderPath })
             saveConfig(config)
@@ -224,7 +291,9 @@ export function serverDocumentsPlugin(): Plugin {
           const targetFullPath = resolve(safeBasePath, relativePath)
 
           // Security check: ensure path does not escape root
-          if (!targetFullPath.startsWith(safeBasePath)) {
+          const normSafe = safeBasePath.replace(/\\/g, '/')
+          const normTarget = targetFullPath.replace(/\\/g, '/')
+          if (normTarget !== normSafe && !normTarget.startsWith(normSafe + '/')) {
             return sendJson(res, { ok: false, error: 'Access denied: Path escapes root directory' }, 403)
           }
 
@@ -270,7 +339,9 @@ export function serverDocumentsPlugin(): Plugin {
             const safeBasePath = resolve(folder.path)
             const targetFullPath = resolve(safeBasePath, relativePath)
 
-            if (!targetFullPath.startsWith(safeBasePath)) {
+            const normSafe = safeBasePath.replace(/\\/g, '/')
+            const normTarget = targetFullPath.replace(/\\/g, '/')
+            if (normTarget !== normSafe && !normTarget.startsWith(normSafe + '/')) {
               return sendJson(res, { ok: false, error: 'Access denied: Path escapes root directory' }, 403)
             }
 

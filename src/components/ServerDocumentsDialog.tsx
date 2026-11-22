@@ -416,11 +416,68 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
 
   const handleAddFolder = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!newFolderName.trim() || !newFolderPath.trim()) return
+    const trimmedName = newFolderName.trim()
+    const trimmedPath = newFolderPath.trim()
+    if (!trimmedName || !trimmedPath) return
+
+    const normInput = trimmedPath.replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase()
+    const existingName = folders.find((f) => f.name.trim().toLowerCase() === trimmedName.toLowerCase())
+    if (existingName) {
+      setError(
+        t('server.duplicateName', {
+          name: trimmedName,
+          defaultValue: `A folder with label "${trimmedName}" already exists.`
+        })
+      )
+      return
+    }
+
+    const existingPath = folders.find(
+      (f) => f.path.replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase() === normInput
+    )
+    if (existingPath) {
+      setError(
+        t('server.duplicatePath', {
+          existing: existingPath.name,
+          defaultValue: `This folder path is already configured as "${existingPath.name}".`
+        })
+      )
+      return
+    }
+
+    // Check if new path is a subfolder of an already added folder
+    const subfolder = folders.find((f) => {
+      const existingNorm = f.path.replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase()
+      return normInput.startsWith(existingNorm + '/')
+    })
+    if (subfolder) {
+      setError(
+        t('server.isSubfolder', {
+          existing: subfolder.name,
+          defaultValue: `This folder is a subfolder of "${subfolder.name}", which is already configured.`
+        })
+      )
+      return
+    }
+
+    // Check if new path is a parent of an already added folder
+    const parentFolder = folders.find((f) => {
+      const existingNorm = f.path.replace(/\\/g, '/').replace(/\/+$/, '').toLowerCase()
+      return existingNorm.startsWith(normInput + '/')
+    })
+    if (parentFolder) {
+      setError(
+        t('server.isParentFolder', {
+          existing: parentFolder.name,
+          defaultValue: `This folder contains "${parentFolder.name}", which is already configured as a root folder.`
+        })
+      )
+      return
+    }
 
     setAddingFolder(true)
     setError(null)
-    const res = await serverDocService.addServerFolder(newFolderName.trim(), newFolderPath.trim())
+    const res = await serverDocService.addServerFolder(trimmedName, trimmedPath)
     if (res.ok && res.folders) {
       setFolders(res.folders)
       const addedId = res.folder?.id
@@ -602,6 +659,17 @@ export function ServerDocumentsDialog({ onClose, onSelectDocument }: ServerDocum
             })}
           </div>
         </div>
+
+        {/* Active Folder Path Bar */}
+        {selectedRootId !== 'all' && (
+          <div
+            className="server-dialog__active-path"
+            title={folders.find((f) => f.id === selectedRootId)?.path}
+          >
+            <IconFolder width={12} height={12} />
+            <span>{folders.find((f) => f.id === selectedRootId)?.path}</span>
+          </div>
+        )}
 
         {/* Error notice */}
         {error && (

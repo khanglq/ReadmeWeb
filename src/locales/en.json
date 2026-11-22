@@ -292,6 +292,10 @@
     "emptyFolderTip": "No markdown files found in this folder",
     "noFilesInFolder": "No markdown files (.md, .markdown) found in this folder.",
     "otherFolders": "Other Documents",
-    "loading": "Loading documents from server..."
+    "loading": "Loading documents from server...",
+    "duplicateName": "A folder with label \"{{name}}\" already exists.",
+    "duplicatePath": "This folder path is already configured as \"{{existing}}\".",
+    "isSubfolder": "This folder is a subfolder of \"{{existing}}\", which is already configured.",
+    "isParentFolder": "This folder contains \"{{existing}}\", which is already configured as a root folder."
   }
 }

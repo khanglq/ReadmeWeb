@@ -1,0 +1,14 @@
+{
+  "serverFolders": [
+    {
+      "id": "folder-docs",
+      "name": "All docs of server",
+      "path": "docs"
+    },
+    {
+      "id": "chessvn-local",
+      "name": "Chessvn Projects",
+      "path": "E:/Projects/Chessvn"
+    }
+  ]
+}

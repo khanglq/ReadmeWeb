@@ -33,12 +33,43 @@ function getConfigFile($root) {
 
 $configFile = getConfigFile($webRoot);
 
+function deduplicateFolders($folders, $webRoot = '') {
+    $seen = [];
+    $unique = [];
+    foreach ($folders as $f) {
+        $p = str_replace('\\', '/', $f['path'] ?? '');
+        $real = realpath($p);
+        if ($real === false && !empty($webRoot)) {
+            $candidate = $webRoot . '/' . ltrim($p, '/\\');
+            $real = realpath($candidate);
+        }
+        $key = $real !== false ? strtolower(str_replace('\\', '/', $real)) : strtolower(rtrim($p, '/\\'));
+        if (!empty($key)) {
+            $isDuplicateOrSub = isset($seen[$key]);
+            if (!$isDuplicateOrSub) {
+                foreach (array_keys($seen) as $existingKey) {
+                    if (str_starts_with($key, $existingKey . '/')) {
+                        $isDuplicateOrSub = true;
+                        break;
+                    }
+                }
+            }
+            if (!$isDuplicateOrSub) {
+                $seen[$key] = true;
+                $unique[] = $f;
+            }
+        }
+    }
+    return $unique;
+}
+
 function loadConfig($file, $webRoot = '') {
     if (file_exists($file)) {
         $raw = @file_get_contents($file);
         if ($raw !== false) {
             $data = json_decode($raw, true);
             if (is_array($data) && isset($data['serverFolders']) && is_array($data['serverFolders']) && count($data['serverFolders']) > 0) {
+                $data['serverFolders'] = deduplicateFolders($data['serverFolders'], $webRoot);
                 return $data;
             }
         }
@@ -46,14 +77,9 @@ function loadConfig($file, $webRoot = '') {
     return [
         'serverFolders' => [
             [
-                'id' => 'chessvn-docs',
-                'name' => 'All Chessvn docs',
-                'path' => '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
-            ],
-            [
-                'id' => 'chessvn-coding-docs',
-                'name' => 'All Chessvn Coding docs',
-                'path' => '/mnt/lqk_hdd/MyData/Work/Projects/Chessvn'
+                'id' => 'folder-docs',
+                'name' => 'All docs of server',
+                'path' => 'docs'
             ]
         ]
     ];
@@ -200,6 +226,31 @@ if ($route === 'server-folders' && $method === 'POST') {
 
     $folderPath = str_replace('\\', '/', $real);
     $config = loadConfig($configFile, $webRoot);
+
+    // Prevent duplicate folder label or duplicate resolved path
+    $canonicalNew = strtolower(str_replace('\\', '/', $real));
+    foreach ($config['serverFolders'] as $existing) {
+        if (strcasecmp($existing['name'], $name) === 0) {
+            jsonResponse(['ok' => false, 'error' => "A folder with label \"$name\" already exists."], 400);
+        }
+        $existingReal = realpath($existing['path']);
+        if ($existingReal === false) {
+            $existingCandidate = $webRoot . '/' . ltrim(str_replace('\\', '/', $existing['path']), '/\\');
+            $existingReal = realpath($existingCandidate);
+        }
+        if ($existingReal !== false) {
+            $canonicalExisting = strtolower(str_replace('\\', '/', $existingReal));
+            if ($canonicalExisting === $canonicalNew) {
+                jsonResponse(['ok' => false, 'error' => "This folder path is already configured as \"{$existing['name']}\"."], 400);
+            }
+            if (str_starts_with($canonicalNew, $canonicalExisting . '/')) {
+                jsonResponse(['ok' => false, 'error' => "This folder is a subfolder of \"{$existing['name']}\", which is already configured."], 400);
+            }
+            if (str_starts_with($canonicalExisting, $canonicalNew . '/')) {
+                jsonResponse(['ok' => false, 'error' => "This folder contains \"{$existing['name']}\", which is already configured as a root folder."], 400);
+            }
+        }
+    }
 
     $id = 'folder-' . time() . '-' . mt_rand(100, 999);
     $newFolder = ['id' => $id, 'name' => $name, 'path' => $folderPath];

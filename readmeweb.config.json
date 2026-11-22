@@ -1,14 +1,9 @@
 {
-    "serverFolders": [
-        {
-            "id": "folder-docs",
-            "name": "All docs of server",
-            "path": "docs"
-        },
-        {
-            "id": "folder-1795315997-319",
-            "name": "All Chessvn docs",
-            "path": "/home/u449414082/domains/readmeweb.com/public_html/docs"
-        }
-    ]
+  "serverFolders": [
+    {
+      "id": "folder-docs",
+      "name": "All docs of server",
+      "path": "docs"
+    }
+  ]
 }
