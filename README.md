@@ -41,3 +41,10 @@ The codebase has been refactored, customized, and extended for the web platform 
 - **Dual-Backend Architecture**: Integrated Vite middleware for local development and native PHP 8.x + LiteSpeed/Apache configuration (`.htaccess`) for web hosting (e.g., Hostinger).
 - **Full Responsive Design**: Seamless adaptive layout across mobile, tablet, and desktop viewports with sliding outline drawer overlay and compact toolbar.
 - **Standalone Node.js Server**: Zero-dependency production server (`server.js`) for VPS and Docker environments.
+
+## License
+
+This project is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE).
+
+Portions derived from [Moji](https://github.com/alexishida/Moji) are originally licensed under the MIT License by Alex Ishida.
+

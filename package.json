@@ -2,6 +2,7 @@
   "name": "readmeweb",
   "version": "1.0.2",
   "author": "khanglq <khanglq@viecai.vn>",
+  "license": "AGPL-3.0-or-later",
   "homepage": "https://readmeweb.com",
   "repository": {
     "type": "git",
